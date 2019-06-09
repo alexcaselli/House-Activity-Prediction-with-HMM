@@ -139,10 +139,34 @@ def addLabelToAction():
                                     if int(endMinuteActivity) > int(endMinuteAction):
                                         coupled = True
 
+                            elif int(endHourActivity) == int(endHourAction) + 1:
+                                if startMinuteActivity == startMinuteAction:
 
+                                    if endMinuteActivity == endMinuteAction:
 
+                                        if startSecondActivity == startSecondAction:
+
+                                            if endSecondActivity == endSecondAction:
+                                                coupled = True
+                                            elif int(endSecondAction) <= int(endSecondActivity) + 50 or int(endSecondAction) >= int(endSecondActivity) - 50:
+                                                coupled = True
+                                            elif int(endSecondAction) <= int(endSecondActivity):
+                                                coupled = True
+                                        
+                                        elif int(startSecondAction) <= int(startSecondActivity) + 50 or int(startSecondAction) >= int(startSecondActivity) - 50:
+                                            coupled = True
+                                        elif int(startSecondAction) <= int(endSecondActivity):
+                                            coupled = True
+
+                                    elif int(endMinuteActivity) > int(endMinuteAction):
+                                        coupled = True
+
+                                    elif int(endHourActivity) > int(endHourAction):
+                                        coupled = True
+
+                                elif int(startMinuteActivity) <= int(startMinuteAction):
+                                    coupled = True   
                                     
-
             if coupled:
                 if nActivity == 0:
                     line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
