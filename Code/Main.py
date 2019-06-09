@@ -3,4 +3,6 @@ from usefullFunction import *
 
 # print(bayespy.__author__)
 
-writeTxtToCsv()
+# writeTxtToCsv()
+
+addLabelToAction()
