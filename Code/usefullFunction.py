@@ -55,10 +55,131 @@ def loadFileInDictionary(file):
 
     return fileDict
 
-
-
-
 def addLabelToAction():
+
+    activityA = open("./Dataset/datasetTXT/OrdonezA_ADLs.txt", "r")
+    actionA = open("./Dataset/datasetTXT/OrdonezA_Sensors.txt", "r")
+    final = open("./Dataset/datasetTXT/labeledData.txt", "w")
+
+    activityADict = loadFileInDictionary(activityA)
+    actionADict = loadFileInDictionary(actionA)
+
+    coupled = False
+    out = False
+
+    # print(len(activityADict))
+    # print(len(actionADict))
+
+    start = 0
+    end = 0
+
+    actionIndex = 0
+
+    for nActivity in range(0, 9):
+        if nActivity == 0:
+            line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
+            final.write(line)
+            final.write("\n")
+        print("ACTIVITY: ", activityADict[nActivity])
+        out = False
+        while actionIndex < 26 and not out == True:
+            coupled = False
+            # print(activityADict[nActivity])
+            # print(actionADict[nAction])
+            print("ACTION: ", actionADict[actionIndex])
+
+            ###### MONTH 
+            startMonthActivity = activityADict[nActivity][0][5:7]
+            endMonthActivity = activityADict[nActivity][2][5:7]
+            startMonthAction = actionADict[actionIndex][0][5:7]
+            endMonthAction = actionADict[actionIndex][2][5:7]
+
+            ###### DAY
+            startDayActivity = activityADict[nActivity][0][8:]
+            endDayActivity = activityADict[nActivity][2][8:]
+            startDayAction = actionADict[actionIndex][0][8:]
+            endDayAction = actionADict[actionIndex][2][8:]   
+
+            ##### HOUR
+            startHourActivity = activityADict[nActivity][1][:2]
+            endHourActivity = activityADict[nActivity][3][:2]
+            startHourAction = actionADict[actionIndex][1][:2]
+            endHourAction = actionADict[actionIndex][3][:2]
+
+            ##### MINUTE
+            startMinuteActivity = activityADict[nActivity][1][3:5]
+            endMinuteActivity = activityADict[nActivity][3][3:5]
+            startMinuteAction = actionADict[actionIndex][1][3:5]
+            endMinuteAction = actionADict[actionIndex][3][3:5]
+
+            ##### SECOND
+            startSecondActivity = activityADict[nActivity][1][6:]
+            endSecondActivity = activityADict[nActivity][3][6:]
+            startSecondAction = actionADict[actionIndex][1][6:]
+            endSecondAction = actionADict[actionIndex][3][6:]
+
+            # print("START DAY ACTIVTIY: ", startDayActivity)
+            # print("START DAY ACTION: ", startDayAction)
+
+            if int(startMonthAction) >= int(startMonthActivity) and int(endMonthAction) <= int(endMonthActivity):
+                print("INSIDE MONTH", end =" ")
+                if int(startDayAction) >= int(startDayActivity) and int(endDayAction) <= int(endDayActivity):
+                    print("INSIDE DAY", end=" ")
+                    if int(startHourAction) >= int(startHourActivity) and int(endHourAction) <= int(endHourActivity):
+                            print("INSIDE HOUR", end=" ")
+                            if int(startMinuteAction) >= int(startMinuteActivity) and int(endMinuteAction) <= int(endMinuteActivity):
+                                print("INSIDE MINUTE", end=" ")
+                                coupled = True
+                            elif int(startMinuteAction) < int(startMinuteActivity):
+                                start = end
+                                actionIndex += 1
+                                coupled = True
+                                #if int(startSecondAction) >= int(startSecondActivity) and int(endSecondAction) <= int(endSecondActivity):
+                                #    print("INSIDE SECOND 1", end = " ")
+                                #    print("")
+                                #    coupled = True
+                                #elif int(startSecondAction) <= int(startSecondActivity) + 5:
+                                #    coupled = True
+                            #elif int(startMinuteAction) >= int(startMinuteActivity) and int(endHourAction) == int(endHourActivity) - 1:
+                            #    coupled = True
+                #if int(endDayActivity) < int(endDayAction):
+                #    out = True
+                #   break
+            print("")
+                                
+            
+            if coupled == True:
+                end += 1
+                actionIndex += 1
+                print("I MOVED END, NOW IS: ", end + 3)
+            #elif start == end:
+            #    print("NO MATCH, JUMP TO NEXT")
+            #    print("")
+            #    end += 1
+            #    start = end
+            #    actionIndex += 1
+            #    continue
+            else:
+                print("START ACTION: ", start + 3)
+                print("END ACTION: ", end + 3)
+                print("I USE THIS ACTIVITY: ", activityADict[nActivity][4])
+                for i in range(start, end):
+                    line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[i][4],
+                    actionADict[i][5], actionADict[i][6])
+                    print("I ADDED THIS LINE: ", line)
+                    final.write(line)
+                    final.write("\n")
+
+                print("")
+                start = end 
+                print(start + 3)
+                print(end + 3)
+                out = True
+
+    
+
+
+'''def addLabelToAction():
 
     activityA = open("./Dataset/datasetTXT/OrdonezA_ADLs.txt", "r")
     actionA = open("./Dataset/datasetTXT/OrdonezA_Sensors.txt", "r")
@@ -72,33 +193,39 @@ def addLabelToAction():
     # print(len(activityADict))
     # print(len(actionADict))
 
+    start = 0
+    end = 1
+
+    actionIndex = 0
+
     for nActivity in activityADict:
-        for nAction in actionADict:
+        while end < len(actionADict):
             coupled = False
             # print(activityADict[nActivity])
             # print(actionADict[nAction])
             startMonthActivity = activityADict[nActivity][0][5:8]
-            startMonthAction = actionADict[nAction][0][5:8]
+            startMonthAction = actionADict[actionIndex][0][5:8]
 
             startDayActivity = activityADict[nActivity][0][8:]
             endDayActivity = activityADict[nActivity][2][8:]
-            startDayAction = actionADict[nAction][0][8:]
-            endDayAction = actionADict[nAction][2][8:]   
+
+            startDayAction = actionADict[actionIndex][0][8:]
+            endDayAction = actionADict[actionIndex][2][8:]   
 
             startHourActivity = activityADict[nActivity][1][:2]
             endHourActivity = activityADict[nActivity][3][:2]
-            startHourAction = actionADict[nAction][1][:2]
-            endHourAction = actionADict[nAction][3][:2]
+            startHourAction = actionADict[actionIndex][1][:2]
+            endHourAction = actionADict[actionIndex][3][:2]
 
             startMinuteActivity = activityADict[nActivity][1][3:5]
             endMinuteActivity = activityADict[nActivity][3][3:5]
-            startMinuteAction = actionADict[nAction][1][3:5]
-            endMinuteAction = actionADict[nAction][3][3:5]
+            startMinuteAction = actionADict[actionIndex][1][3:5]
+            endMinuteAction = actionADict[actionIndex][3][3:5]
 
             startSecondActivity = activityADict[nActivity][1][6:]
             endSecondActivity = activityADict[nActivity][3][6:]
-            startSecondAction = actionADict[nAction][1][6:]
-            endSecondAction = actionADict[nAction][3][6:]
+            startSecondAction = actionADict[actionIndex][1][6:]
+            endSecondAction = actionADict[actionIndex][3][6:]
 
             if startMonthActivity == startMonthAction:
 
@@ -176,10 +303,4 @@ def addLabelToAction():
                 line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[nAction][4], 
                                                     actionADict[nAction][5], actionADict[nAction][6])
                 final.write(line)
-                final.write("\n")
-
-
-
-    
-
-
+                final.write("\n")'''
