@@ -66,6 +66,7 @@ def addLabelToAction():
 
     coupled = False
     out = False
+    skip = False
 
     # print(len(activityADict))
     # print(len(actionADict))
@@ -75,15 +76,16 @@ def addLabelToAction():
 
     actionIndex = 0
 
-    for nActivity in range(0, 9):
+    for nActivity in range(0, 11):
         if nActivity == 0:
             line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
             final.write(line)
             final.write("\n")
         print("ACTIVITY: ", activityADict[nActivity])
         out = False
-        while actionIndex < 26 and not out == True:
+        while actionIndex < 28 and not out == True:
             coupled = False
+            skip = False
             # print(activityADict[nActivity])
             # print(actionADict[nAction])
             print("ACTION: ", actionADict[actionIndex])
@@ -126,22 +128,19 @@ def addLabelToAction():
                 if int(startDayAction) >= int(startDayActivity) and int(endDayAction) <= int(endDayActivity):
                     print("INSIDE DAY", end=" ")
                     if int(startHourAction) >= int(startHourActivity) and int(endHourAction) <= int(endHourActivity):
-                            print("INSIDE HOUR", end=" ")
-                            if int(startMinuteAction) >= int(startMinuteActivity) and int(endMinuteAction) <= int(endMinuteActivity):
-                                print("INSIDE MINUTE", end=" ")
+                        print("INSIDE HOUR", end=" ")
+                        if int(startMinuteAction) >= int(startMinuteActivity) and int(endMinuteAction) <= int(endMinuteActivity):
+                            print("INSIDE MINUTE", end=" ")
+                            if int(startSecondAction) >= int(startSecondActivity) or int(endSecondAction) <= int(endSecondActivity):
+                                print("INSIDE SECOND 1", end = " ")
+                                print("")
                                 coupled = True
-                            elif int(startMinuteAction) < int(startMinuteActivity):
-                                start = end
-                                actionIndex += 1
+                            elif int(endMinuteAction) <= int(endMinuteActivity):
                                 coupled = True
-                                #if int(startSecondAction) >= int(startSecondActivity) and int(endSecondAction) <= int(endSecondActivity):
-                                #    print("INSIDE SECOND 1", end = " ")
-                                #    print("")
-                                #    coupled = True
-                                #elif int(startSecondAction) <= int(startSecondActivity) + 5:
-                                #    coupled = True
-                            #elif int(startMinuteAction) >= int(startMinuteActivity) and int(endHourAction) == int(endHourActivity) - 1:
-                            #    coupled = True
+                        elif int(startMinuteAction) < int(startMinuteActivity):
+                            if int(endMinuteAction) == int(startMinuteActivity):
+                                skip = True
+
                 #if int(endDayActivity) < int(endDayAction):
                 #    out = True
                 #   break
@@ -152,13 +151,10 @@ def addLabelToAction():
                 end += 1
                 actionIndex += 1
                 print("I MOVED END, NOW IS: ", end + 3)
-            #elif start == end:
-            #    print("NO MATCH, JUMP TO NEXT")
-            #    print("")
-            #    end += 1
-            #    start = end
-            #    actionIndex += 1
-            #    continue
+            elif skip == True:
+                start += 1
+                end += 1
+                actionIndex += 1
             else:
                 print("START ACTION: ", start + 3)
                 print("END ACTION: ", end + 3)
@@ -172,8 +168,6 @@ def addLabelToAction():
 
                 print("")
                 start = end 
-                print(start + 3)
-                print(end + 3)
                 out = True
 
     
