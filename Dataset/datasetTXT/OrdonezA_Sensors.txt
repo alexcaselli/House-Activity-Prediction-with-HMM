@@ -64,7 +64,7 @@ Start time          	End time            	Location	Type		Place
 2011-11-29 16:34:17		2011-11-29 17:08:07		Seat		Pressure	Living
 2011-11-29 17:08:58		2011-11-29 17:09:00		Basin		PIR			Bathroom
 2011-11-29 17:09:04		2011-11-29 17:09:29		Toilet		Flush		Bathroom
-2011-11-29 17:09:09		2011-11-29 18:57:22		Seat		Pressure	Living
+2011-11-29 17:43:09		2011-11-29 18:57:22		Seat		Pressure	Living
 2011-11-29 19:02:15		2011-11-29 19:02:21		Maindoor	Magnetic	Entrance
 2011-11-29 20:23:32		2011-11-29 20:23:38		Maindoor	Magnetic	Entrance
 2011-11-29 20:28:08		2011-11-30 01:19:47		Seat		Pressure	Living
@@ -116,17 +116,15 @@ Start time          	End time            	Location	Type		Place
 2011-12-01 11:17:29		2011-12-01 11:17:43		Fridge		Magnetic	Kitchen
 2011-12-01 11:17:49		2011-12-01 11:19:43		Microwave	Electric	Kitchen
 2011-12-01 11:30:06		2011-12-01 14:29:02		Seat		Pressure	Living
-2011-12-01 14:08:19		2011-12-01 14:08:22		Basin		PIR			Bathroom
 2011-12-01 14:29:37		2011-12-01 14:52:02		Cooktop		PIR			Kitchen
 2011-12-01 14:29:48		2011-12-01 14:36:38		Microwave	Electric	Kitchen
 2011-12-01 14:38:25		2011-12-01 14:38:54		Fridge		Magnetic	Kitchen
 2011-12-01 14:49:15		2011-12-01 14:49:19		Fridge		Magnetic	Kitchen
 2011-12-01 15:09:00		2011-12-01 16:26:17		Seat		Pressure	Living
 2011-12-01 16:26:35		2011-12-01 16:27:04		Toilet		Flush		Bathroom
-2011-12-01 16:26:36		2011-12-01 17:27:13		Basin		PIR			Bathroom
+2011-12-01 17:26:36		2011-12-01 17:27:13		Basin		PIR			Bathroom
 2011-12-01 17:29:29		2011-12-01 17:29:58		Maindoor	Magnetic	Entrance
 2011-12-01 18:49:46		2011-12-01 18:49:51		Maindoor	Magnetic	Entrance
-2011-12-01 18:54:52		2011-12-01 18:54:56		Fridge		Magnetic	Kitchen
 2011-12-01 18:55:03		2011-12-01 19:10:34		Seat		Pressure	Living
 2011-12-01 19:28:51		2011-12-01 19:29:17		Toilet		Flush		Bathroom
 2011-12-01 19:29:13		2011-12-01 23:52:52		Seat		Pressure	Living
@@ -176,7 +174,6 @@ Start time          	End time            	Location	Type		Place
 2011-12-03 14:18:11		2011-12-03 14:18:23		Maindoor	Magnetic	Entrance
 2011-12-03 17:48:33		2011-12-03 17:48:37		Maindoor	Magnetic	Entrance
 2011-12-03 17:50:14		2011-12-03 20:37:41		Seat		Pressure	Living
-2011-12-03 20:37:49		2011-12-03 20:38:07		Maindoor	Magnetic	Entrance
 2011-12-03 20:38:15		2011-12-03 23:53:24		Seat		Pressure	Living
 2011-12-03 23:54:51		2011-12-03 23:55:21		Toilet		Flush		Bathroom
 2011-12-03 23:55:18		2011-12-04 03:16:13		Seat		Pressure	Living

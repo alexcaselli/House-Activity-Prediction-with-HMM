@@ -1,8 +1,8 @@
 import bayespy
-from usefullFunction import *
+from RealUsefullAction import *
 
 # print(bayespy.__author__)
 
 # writeTxtToCsv()
 
-addLabelToAction()
+addLabelToActionNew()
