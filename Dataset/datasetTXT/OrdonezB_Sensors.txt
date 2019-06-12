@@ -12,8 +12,7 @@ Start time          	End time            	Location	Type		Place
 2012-11-12 00:48:38		2012-11-12 00:50:12		Basin		PIR			Bathroom
 2012-11-12 00:50:29		2012-11-12 00:50:32		Door		PIR			Living
 2012-11-12 00:51:18		2012-11-12 01:52:12		Seat		Pressure	Living
-2012-11-12 01:53:19		2012-11-12 01:53:22		Door		PIR			Living
-2012-11-12 01:53:27		2012-11-12 01:53:35		Basin		PIR			Bathroom
+2012-11-12 01:52:30		2012-11-12 01:52:59		Basin		PIR			Bathroom
 2012-11-12 01:53:39		2012-11-12 01:54:27		Toilet		Flush		Bathroom
 2012-11-12 01:53:53		2012-11-12 01:53:57		Door		PIR			Bedroom
 2012-11-12 01:55:09		2012-11-12 09:30:35		Bed			Pressure	Bedroom
@@ -64,7 +63,7 @@ Start time          	End time            	Location	Type		Place
 2012-11-12 11:38:27		2012-11-12 11:40:06		Fridge		Magnetic	Kitchen
 2012-11-12 11:43:52		2012-11-12 11:43:55		Fridge		Magnetic	Kitchen
 2012-11-12 11:47:09		2012-11-12 11:47:23		Door		PIR			Kitchen
-2012-11-12 11:47:38		2012-11-12 11:47:48		Door		PIR			Living
+2012-11-12 11:48:38		2012-11-12 11:48:48		Door		PIR			Living
 2012-11-12 12:01:50		2012-11-12 12:01:52		Door		PIR			Living
 2012-11-12 12:02:07		2012-11-12 12:02:09		Door		PIR			Bedroom
 2012-11-12 12:22:23		2012-11-12 12:22:30		Door		PIR			Bedroom
@@ -117,8 +116,8 @@ Start time          	End time            	Location	Type		Place
 2012-11-12 17:30:08		2012-11-12 17:30:16		Door		PIR			Living
 2012-11-12 17:35:38		2012-11-12 17:35:42		Door		PIR			Living
 2012-11-12 17:43:33		2012-11-12 17:44:31		Toilet		Flush		Bathroom
-2012-11-12 17:43:55		2012-11-12 17:44:07		Basin		PIR			Bathroom
-2012-11-12 17:44:37		2012-11-12 17:44:40		Door		PIR			Living
+2012-11-12 17:44:30		2012-11-12 17:44:32		Basin		PIR			Bathroom
+2012-11-12 17:44:49		2012-11-12 17:44:50		Door		PIR			Living
 2012-11-12 17:45:22		2012-11-12 18:46:58		Seat		Pressure	Living
 2012-11-12 18:47:29		2012-11-12 18:47:32		Door		PIR			Living
 2012-11-12 18:47:45		2012-11-12 18:47:49		Door		PIR			Kitchen
@@ -130,8 +129,6 @@ Start time          	End time            	Location	Type		Place
 2012-11-12 19:02:15		2012-11-12 19:02:19		Door		PIR			Living
 2012-11-12 19:03:07		2012-11-12 20:56:46		Seat		Pressure	Living
 2012-11-12 20:57:05		2012-11-12 20:57:07		Door		PIR			Living
-2012-11-12 20:57:11		2012-11-12 20:57:23		Door		PIR			Bedroom
-2012-11-12 20:59:39		2012-11-12 20:59:42		Door		PIR			Bedroom
 2012-11-12 21:06:32		2012-11-12 21:06:35		Door		PIR			Living
 2012-11-12 21:11:39		2012-11-12 21:11:58		Door		PIR			Living
 2012-11-12 21:14:56		2012-11-12 21:15:03		Basin		PIR			Bathroom
@@ -161,7 +158,7 @@ Start time          	End time            	Location	Type		Place
 2012-11-13 01:30:32		2012-11-13 08:51:15		Bed			Pressure	Bedroom
 2012-11-13 08:52:03		2012-11-13 08:52:06		Door		PIR			Bedroom
 2012-11-13 08:53:48		2012-11-13 08:53:50		Door		PIR			Living
-2012-11-13 08:56:37		2012-11-13 08:56:40		Door		PIR			Living
+2012-11-13 08:53:50		2012-11-13 08:53:55		Door		PIR			Living
 2012-11-13 08:56:52		2012-11-13 08:56:57		Door		PIR			Kitchen
 2012-11-13 08:57:49		2012-11-13 08:57:53		Fridge		Magnetic	Kitchen
 2012-11-13 08:58:45		2012-11-13 09:00:26		Microwave	Electric	Kitchen

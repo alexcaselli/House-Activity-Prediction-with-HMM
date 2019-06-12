@@ -213,7 +213,7 @@ Start time          	End time            	Location	Type		Place
 2011-12-05 12:15:45 	2011-12-05 12:17:41		Toaster		Electric	Kitchen
 2011-12-05 12:15:55		2011-12-05 12:17:58		Microwave	Electric	Kitchen
 2011-12-05 12:16:02		2011-12-05 12:16:06		Fridge		Magnetic	Kitchen
-2011-12-05 12:26:37		2011-12-05 14:26:46		Seat		Pressure	Living
+2011-12-05 13:46:37		2011-12-05 14:26:46		Seat		Pressure	Living
 2011-12-05 14:28:36		2011-12-05 14:28:42		Basin		PIR			Bathroom
 2011-12-05 14:38:07		2011-12-05 14:38:32		Maindoor	Magnetic	Entrance
 2011-12-05 14:55:00		2011-12-05 14:55:06		Maindoor	Magnetic	Entrance
@@ -262,7 +262,6 @@ Start time          	End time            	Location	Type		Place
 2011-12-06 14:48:47		2011-12-06 14:48:52		Fridge		Magnetic	Kitchen
 2011-12-06 14:52:17		2011-12-06 14:52:22		Fridge		Magnetic	Kitchen
 2011-12-06 14:56:50		2011-12-06 14:56:54		Fridge		Magnetic	Kitchen
-2011-12-06 15:17:49		2011-12-06 15:18:18		Seat		Pressure	Living
 2011-12-06 15:18:35		2011-12-06 15:20:32		Basin		PIR			Bathroom
 2011-12-06 15:21:46		2011-12-06 17:11:04		Seat		Pressure	Living
 2011-12-06 17:18:22		2011-12-06 17:18:49		Toilet		Flush		Bathroom
@@ -296,15 +295,13 @@ Start time          	End time            	Location	Type		Place
 2011-12-07 14:27:39		2011-12-07 14:27:44		Fridge		Magnetic	Kitchen
 2011-12-07 14:41:59		2011-12-07 15:28:03		Seat		Pressure	Living
 2011-12-07 15:31:23		2011-12-07 15:31:41		Basin		PIR			Bathroom
-2011-12-07 15:31:46		2011-12-07 15:32:18		Toilet		Flush		Bathroom
 2011-12-07 15:32:15		2011-12-07 16:11:28		Seat		Pressure	Living
 2011-12-07 16:15:26		2011-12-07 16:21:09		Basin		PIR			Bathroom
 2011-12-07 16:25:45		2011-12-07 16:25:52		Maindoor	Magnetic	Entrance
 2011-12-07 18:12:30		2011-12-07 18:12:36		Maindoor	Magnetic	Entrance
 2011-12-07 18:14:56		2011-12-07 18:14:59		Basin		PIR			Bathroom
-2011-12-07 18:15:03		2011-12-07 18:15:29		Toilet		Flush		Bathroom
+2011-12-07 18:15:03		2011-12-07 18:15:40		Toilet		Flush		Bathroom
 2011-12-07 18:15:51		2011-12-07 19:21:46		Seat		Pressure	Living
-2011-12-07 19:23:32		2011-12-07 19:23:39		Maindoor	Magnetic	Entrance
 2011-12-07 19:23:55		2011-12-07 19:24:00		Fridge		Magnetic	Kitchen
 2011-12-07 19:24:02		2011-12-07 19:24:05		Cupboard	Magnetic	Kitchen
 2011-12-07 19:28:41		2011-12-07 19:28:46		Fridge		Magnetic	Kitchen
@@ -318,7 +315,7 @@ Start time          	End time            	Location	Type		Place
 2011-12-07 23:20:16		2011-12-08 01:32:32		Seat		Pressure	Living
 2011-12-08 01:39:41		2011-12-08 11:14:29		Bed			Pressure	Bedroom
 2011-12-08 11:17:37		2011-12-08 11:17:48		Basin		PIR			Bathroom
-2011-12-08 11:17:58		2011-12-08 11:18:30		Toilet		Flush		Bathroom
+2011-12-08 11:18:40		2011-12-08 11:18:41 	Toilet		Flush		Bathroom
 2011-12-08 11:18:02		2011-12-08 11:18:05		Cabinet		Magnetic	Bathroom
 2011-12-08 11:18:10		2011-12-08 11:18:13		Basin		PIR			Bathroom
 2011-12-08 11:19:22		2011-12-08 11:24:17		Shower		PIR			Bathroom
@@ -339,7 +336,7 @@ Start time          	End time            	Location	Type		Place
 2011-12-09 01:04:24		2011-12-09 01:05:43		Basin		PIR			Bathroom
 2011-12-09 01:16:42		2011-12-09 10:49:07		Bed			Pressure	Bedroom
 2011-12-09 10:51:56		2011-12-09 10:52:27		Toilet		Flush		Bathroom
-2011-12-09 10:52:30		2011-12-09 10:52:36		Cabinet		Magnetic	Bathroom
+2011-12-09 10:52:39		2011-12-09 10:52:40		Cabinet		Magnetic	Bathroom
 2011-12-09 10:52:40		2011-12-09 10:52:50		Basin		PIR			Bathroom
 2011-12-09 10:54:58		2011-12-09 10:58:21		Shower		PIR			Bathroom
 2011-12-09 11:00:13		2011-12-09 11:02:48		Toaster		Electric	Kitchen
@@ -404,5 +401,3 @@ Start time          	End time            	Location	Type		Place
 2011-12-11 15:13:52		2011-12-11 15:13:57		Fridge		Magnetic	Kitchen
 2011-12-11 15:29:03		2011-12-11 15:30:14		Toilet		Flush		Bathroom
 2011-12-11 15:41:34		2011-12-11 15:43:30		Basin		PIR			Bathroom
-2011-12-11 15:43:51		2011-12-12 00:22:50		Seat		Pressure	Living
-2011-12-12 00:31:35		2011-12-12 07:22:21		Bed			Pressure	Bedroom

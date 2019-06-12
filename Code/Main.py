@@ -5,4 +5,5 @@ from RealUsefullAction import *
 
 # writeTxtToCsv()
 
-addLabelToActionNew()
+# addLabelToActionA()
+addLabelToActionB()

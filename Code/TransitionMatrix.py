@@ -41,6 +41,7 @@ for activity in saved_column:
 		times[0, my_dict[prev]] += 1;
 		prev = activity
 print(T)
+
 #Normalize the matrix 
 for i in range(0,T.shape[0]):
 	T[i,:]=T[i,:]/times[0,i]
