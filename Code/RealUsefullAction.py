@@ -199,14 +199,14 @@ def addLabelToActionB():
 
     actionIndex = 0
 
-    for nActivity in range(0, 47):
+    for nActivity in range(0, 57):
         if nActivity == 0:
             line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
             final.write(line)
             final.write("\n")
         print("ACTIVITY: ", activityADict[nActivity])
         out = False
-        while actionIndex < 165 and not out == True:
+        while actionIndex < 215 and not out == True:
             coupled = False
             skip = False
             # print(activityADict[nActivity])
