@@ -1,3 +1,6 @@
+import csv
+
+
 def loadFileInDictionary(file):
 
     fileDict = dict()
@@ -14,6 +17,36 @@ def loadFileInDictionary(file):
         nLine += 1
 
     return fileDict
+
+def writeTxtToCsv(home):
+
+    txtLabeledB = open("./Dataset/datasetTXT/labeledData"+home+".txt", "r")
+    skipLine = 1
+    nLine = 1
+
+    with open("./Dataset/datasetCSV/labeled"+home+".csv", mode='w') as activityA:
+        activity_writer = csv.writer(activityA, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        activity_writer.writerow(['NUMBER', 'ACTIVITY', 'LOCATION', 'TYPE', 'PLACE'])
+
+        for line in txtLabeledB:
+            if skipLine > 0:
+                skipLine -= 1
+                continue
+            line = line.split()
+            
+            activity_writer.writerow([nLine, str(line[0]), str(line[1]), str(line[2]), str(line[3])])
+            nLine += 1
+
+    skipLine = 2
+    nLine = 1
+
+       
+
+
+
+    
+
 
 def addLabelToActionA():
 
@@ -199,14 +232,14 @@ def addLabelToActionB():
 
     actionIndex = 0
 
-    for nActivity in range(0, 57):
+    for nActivity in activityADict:
         if nActivity == 0:
             line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
             final.write(line)
             final.write("\n")
         print("ACTIVITY: ", activityADict[nActivity])
         out = False
-        while actionIndex < 215 and not out == True:
+        while actionIndex < len(actionADict) and not out == True:
             coupled = False
             skip = False
             # print(activityADict[nActivity])
