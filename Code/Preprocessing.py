@@ -1,5 +1,12 @@
 import csv
 
+def launchPreProcessing():
+
+    addLabelToActionA()
+    addLabelToActionB()
+    writeTxtToCsv("A")
+    writeTxtToCsv("B")
+    print("PREPROCESSING DONE")
 
 def loadFileInDictionary(file):
 
@@ -41,12 +48,6 @@ def writeTxtToCsv(home):
     skipLine = 2
     nLine = 1
 
-       
-
-
-
-    
-
 
 def addLabelToActionA():
 
@@ -74,14 +75,14 @@ def addLabelToActionA():
             line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
             final.write(line)
             final.write("\n")
-        print("ACTIVITY: ", activityADict[nActivity])
+        # print("ACTIVITY: ", activityADict[nActivity])
         out = False
         while actionIndex < len(actionADict) and not out == True:
             coupled = False
             skip = False
             # print(activityADict[nActivity])
             # print(actionADict[nAction])
-            print("ACTION: ", actionADict[actionIndex])
+            # print("ACTION: ", actionADict[actionIndex])
 
             ###### MONTH 
             startMonthActivity = int(activityADict[nActivity][0][5:7])
@@ -127,22 +128,22 @@ def addLabelToActionA():
                 locationActionBefore = "EARLY"
                 locationAction = "EARLY"
 
-            print("START TIME ACTIVITY: ", startTimeActivity)
-            print("START TIME ACTION: ", startTimeAction)
-            print("--------------------")
-            print("END TIME ACTIVITY: ", endTimeActivity)
-            print("END TIME ACTION: ", endTimeAction)
+            # print("START TIME ACTIVITY: ", startTimeActivity)
+            # print("START TIME ACTION: ", startTimeAction)
+            # print("--------------------")
+            # print("END TIME ACTIVITY: ", endTimeActivity)
+            # print("END TIME ACTION: ", endTimeAction)
 
             # perfect situation
             if startTimeActivity <= startTimeAction and endTimeActivity + 2 >= endTimeAction - 51:
-                print("I AM INSIDE FIRST")
+                # print("I AM INSIDE FIRST")
                 if endDayActivity != endDayAction:
-                    print("NOT SAME DAY")
+                    # print("NOT SAME DAY")
                     coupled = False
                 elif locationActionBefore != locationAction:
-                    print("NOT SAME LOCATION")
-                    print(locationActionBefore)
-                    print(locationAction)
+                    # print("NOT SAME LOCATION")
+                    # print(locationActionBefore)
+                    # print(locationAction)
                     coupled = False
                 else:
                     coupled = True
@@ -151,52 +152,49 @@ def addLabelToActionA():
 
             # riding day before
             elif startTimeActivity <= startTimeAction and endDayAction == endDayActivity - 1:
-                print("I AM INSIDE SECOND")
+                # print("I AM INSIDE SECOND")
                 coupled = True
             
             # riding day after
             elif endTimeActivity >= endTimeAction and startDayAction == startDayActivity + 1:
-                print("I AM INSIDE THIRD")
+                # print("I AM INSIDE THIRD")
                 coupled = True
 
             # riding month before
             elif startTimeActivity <= startTimeAction and endDayActivity == 1 and endMonthAction == endMonthActivity - 1:
-                print("I AM INSIDE FOURTH")
+                # print("I AM INSIDE FOURTH")
                 coupled = True
             
             # riding month after
             elif endTimeActivity >= endTimeAction and endDayActivity == 1 and endDayAction == 1 and startMonthAction == startMonthActivity +1:
-                print("I AM INSIDE FIFTH")
+                # print("I AM INSIDE FIFTH")
                 coupled = True
-            
 
             # jump no labeled action
-
             elif endTimeAction < startTimeActivity and not startDayActivity < startDayAction and not startDayAction == 1:
-                print("I AM IN THE SKIP")
+                # print("I AM IN THE SKIP")
                 skip = True
 
             else:
                 coupled = False
                                 
-            
             if coupled == True:
                 end += 1
                 actionIndex += 1
-                print("I MOVED END, NOW IS: ", end + 3)
+                # print("I MOVED END, NOW IS: ", end + 3)
             elif skip == True:
-                print("I AM SKIPPING")
+                # print("I AM SKIPPING")
                 start += 1
                 end += 1
                 actionIndex += 1
             else:
-                print("START ACTION: ", start + 3)
-                print("END ACTION: ", end + 3)
-                print("I USE THIS ACTIVITY: ", activityADict[nActivity][4])
+                # print("START ACTION: ", start + 3)
+                # print("END ACTION: ", end + 3)
+                # print("I USE THIS ACTIVITY: ", activityADict[nActivity][4])
                 for i in range(start, end):
                     line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[i][4],
                     actionADict[i][5], actionADict[i][6])
-                    print("I ADDED THIS LINE: ", line)
+                    # print("I ADDED THIS LINE: ", line)
                     final.write(line)
                     final.write("\n")
                 start = end 
@@ -206,10 +204,10 @@ def addLabelToActionA():
                 for i in range(start, end):
                     line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[i][4],
                     actionADict[i][5], actionADict[i][6])
-                    print("I ADDED THIS LINE: ", line)
+                    # print("I ADDED THIS LINE: ", line)
                     final.write(line)
                     final.write("\n")
-            print("")
+            # print("")
 
 def addLabelToActionB():
 
@@ -237,14 +235,14 @@ def addLabelToActionB():
             line = "{:<17}{:<10}{:<10}{:<10}".format("ACTIVITY", "LOCATION", "TYPE", "PLACE")
             final.write(line)
             final.write("\n")
-        print("ACTIVITY: ", activityADict[nActivity])
+        # print("ACTIVITY: ", activityADict[nActivity])
         out = False
         while actionIndex < len(actionADict) and not out == True:
             coupled = False
             skip = False
             # print(activityADict[nActivity])
             # print(actionADict[nAction])
-            print("ACTION: ", actionADict[actionIndex])
+            # print("ACTION: ", actionADict[actionIndex])
 
             ###### MONTH 
             startMonthActivity = int(activityADict[nActivity][0][5:7])
@@ -290,17 +288,17 @@ def addLabelToActionB():
                 locationActionBefore = "EARLY"
                 locationAction = "EARLY"
 
-            print("START TIME ACTIVITY: ", startTimeActivity)
-            print("START TIME ACTION: ", startTimeAction)
-            print("--------------------")
-            print("END TIME ACTIVITY: ", endTimeActivity)
-            print("END TIME ACTION: ", endTimeAction)
+            # print("START TIME ACTIVITY: ", startTimeActivity)
+            # print("START TIME ACTION: ", startTimeAction)
+            # print("--------------------")
+            # print("END TIME ACTIVITY: ", endTimeActivity)
+            # print("END TIME ACTION: ", endTimeAction)
 
             # perfect situation
             if startTimeActivity <= startTimeAction and endTimeActivity>= endTimeAction - 28:
-                print("I AM INSIDE FIRST")
+                # print("I AM INSIDE FIRST")
                 if endDayActivity != endDayAction:
-                    print("NOT SAME DAY")
+                    # print("NOT SAME DAY")
                     coupled = False
                 # elif locationActionBefore != locationAction:
                 #    print("NOT SAME LOCATION")
@@ -314,29 +312,29 @@ def addLabelToActionB():
 
             # riding day before
             elif startTimeActivity <= startTimeAction and endDayAction == endDayActivity - 1:
-                print("I AM INSIDE SECOND")
+                # print("I AM INSIDE SECOND")
                 coupled = True
             
             # riding day after
             elif endTimeActivity >= endTimeAction and startDayAction == startDayActivity + 1:
-                print("I AM INSIDE THIRD")
+                # print("I AM INSIDE THIRD")
                 coupled = True
 
             # riding month before
             elif startTimeActivity <= startTimeAction and endDayActivity == 1 and endMonthAction == endMonthActivity - 1:
-                print("I AM INSIDE FOURTH")
+                # print("I AM INSIDE FOURTH")
                 coupled = True
             
             # riding month after
             elif endTimeActivity >= endTimeAction and endDayActivity == 1 and endDayAction == 1 and startMonthAction == startMonthActivity +1:
-                print("I AM INSIDE FIFTH")
+                # print("I AM INSIDE FIFTH")
                 coupled = True
             
 
             # jump no labeled action
 
             elif endTimeAction < startTimeActivity and not startDayActivity < startDayAction and not startDayAction == 1:
-                print("I AM IN THE SKIP")
+                # print("I AM IN THE SKIP")
                 skip = True
 
             else:
@@ -346,20 +344,20 @@ def addLabelToActionB():
             if coupled == True:
                 end += 1
                 actionIndex += 1
-                print("I MOVED END, NOW IS: ", end + 3)
+                # print("I MOVED END, NOW IS: ", end + 3)
             elif skip == True:
-                print("I AM SKIPPING")
+                # print("I AM SKIPPING")
                 start += 1
                 end += 1
                 actionIndex += 1
             else:
-                print("START ACTION: ", start + 3)
-                print("END ACTION: ", end + 3)
-                print("I USE THIS ACTIVITY: ", activityADict[nActivity][4])
+                # print("START ACTION: ", start + 3)
+                # print("END ACTION: ", end + 3)
+                # print("I USE THIS ACTIVITY: ", activityADict[nActivity][4])
                 for i in range(start, end):
                     line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[i][4],
                     actionADict[i][5], actionADict[i][6])
-                    print("I ADDED THIS LINE: ", line)
+                    # print("I ADDED THIS LINE: ", line)
                     final.write(line)
                     final.write("\n")
                 start = end 
@@ -369,26 +367,7 @@ def addLabelToActionB():
                 for i in range(start, end):
                     line = "{:<17}{:<10}{:<10}{:<10}".format(activityADict[nActivity][4], actionADict[i][4],
                     actionADict[i][5], actionADict[i][6])
-                    print("I ADDED THIS LINE: ", line)
+                    # print("I ADDED THIS LINE: ", line)
                     final.write(line)
                     final.write("\n")
-            print("")
-
-
-'''if int(startMonthAction) >= int(startMonthActivity) and int(endMonthAction) <= int(endMonthActivity):
-                print("INSIDE MONTH", end =" ")
-                if int(startDayAction) >= int(startDayActivity) and int(endDayAction) <= int(endDayActivity):
-                    print("INSIDE DAY", end=" ")
-                    if int(startHourAction) >= int(startHourActivity) and int(endHourAction) <= int(endHourActivity):
-                        print("INSIDE HOUR", end=" ")
-                        if int(startMinuteAction) >= int(startMinuteActivity) and int(endMinuteAction) <= int(endMinuteActivity):
-                            print("INSIDE MINUTE", end=" ")
-                            if int(startSecondAction) >= int(startSecondActivity) or int(endSecondAction) <= int(endSecondActivity):
-                                print("INSIDE SECOND 1", end = " ")
-                                print("")
-                                coupled = True
-                            elif int(endMinuteAction) <= int(endMinuteActivity):
-                                coupled = True
-                        elif int(startMinuteAction) < int(startMinuteActivity):
-                            if int(endMinuteAction) == int(startMinuteActivity):
-                                skip = True'''
+            # print("")
