@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import csv
 
 def computeTransitionMatrix(home):
 	home = './Dataset/datasetCSV/labeled'+home+'.csv'
@@ -13,6 +14,7 @@ def calculateT(csv_file):
 	column_name='ACTIVITY'
 	df = pd.read_csv(csv_file, sep=';')
 	saved_column = df[column_name]
+	homeA = False
 
 	mylist = list( dict.fromkeys(saved_column) )
 	ml = sorted(mylist)
@@ -21,6 +23,7 @@ def calculateT(csv_file):
 	#['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 	if 'labeledA' in csv_file:
 		sor = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+		homeA = True
 	else:
 		sor = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
@@ -45,6 +48,17 @@ def calculateT(csv_file):
 			times[0, my_dict[prev]] += 1
 			prev = activity
 	# print(sor)
+	if homeA:
+		with open("./Data/HomeAactivity.csv", "w") as csvData:
+			writer = csv.writer(csvData, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+			writer.writerow(['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting'])
+			writer.writerow([int(times[0][0]), int(times[0][1]), int(times[0][2]), int(times[0][3]), int(times[0][4]), int(times[0][5]), int(times[0][6]), int(times[0][7]), int(times[0][8])])
+	else:
+		with open("./Data/HomeBactivity.csv", "w") as csvData:
+			writer = csv.writer(csvData, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+			writer.writerow(['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting'])
+			writer.writerow([int(times[0][0]), int(times[0][1]), int(times[0][2]), int(times[0][3]), int(times[0][4]), int(times[0][5]), int(times[0][6]), int(times[0][7]), int(times[0][8]), int(times[0][9])])  	
+				
 	# print(times)
 
 	for row in range(0, len(T)):
