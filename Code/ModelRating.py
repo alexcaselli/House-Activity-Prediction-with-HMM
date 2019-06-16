@@ -9,7 +9,19 @@ def getCorrectActivitySequence(home):
     with open("./Dataset/datasetCSV/labeled"+home+".csv", "r") as correctActivity:
         reader = csv.reader(correctActivity, delimiter = ';', quoting=csv.QUOTE_ALL)
         next(reader)
+        #dictionary for indexing in T
+        activ_dict = {}
+        index = 0
 
+        sorted_act = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+        for act in sorted_act:
+            activ_dict[act] = index
+            index += 1
+
+        for line in reader:
+            act_name = line[1]
+            activity.append(activ_dict[act_name])
+        '''
         for line in reader:
             if line[1] == "Breakfast":
                 activity.append(0)
@@ -32,7 +44,7 @@ def getCorrectActivitySequence(home):
             else:
                 print("this is a problem...")
                 print(line)
-
+        '''
         # print(activity)
 
     return np.array([activity])
@@ -49,6 +61,23 @@ def getAction(home):
         reader = csv.reader(action, delimiter = ';', quoting=csv.QUOTE_ALL)
         next(reader)
 
+        sorted_oss = ['BasinPIRBathroom', 'BedPressureBedroom', 'CabinetMagneticBathroom', 'CooktopPIRKitchen', 'CupboardMagneticKitchen', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance',
+         'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToasterElectricKitchen', 'ToiletFlushBathroom']
+
+        #dictionary for indexing Activity in O
+        oss_dict = {}
+        index = 0
+        for oss_name in sorted_oss:
+            oss_dict[oss_name] = index
+            index+=1
+            
+        for line in reader:
+            action = ''
+            action += line[2]+line[3]+line[4]
+            actionSequence.append(oss_dict[action])
+
+
+        '''
         for line in reader:
             action = ""
             action += line[2]+line[3]+line[4]
@@ -79,6 +108,7 @@ def getAction(home):
             else:
                 print("this is a problem...")
                 print(line)
+                '''
 
     # print(actionSequence)
 
