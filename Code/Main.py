@@ -146,6 +146,9 @@ model.emissionprob_ = np.array([[0.9, 0.1],
 #non so
 posteriors = model.predict_proba(np.array([[0, 0, 1, 0]]).T)
 print(posteriors)
+print("")
+# viterbi = model.predict_proba(np.array([[1, 0, 1]]).T)
+# print(viterbi)
 
 #problema 2, viterbi
 # logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
