@@ -6,13 +6,14 @@ from ModelRating import getCorrectActivitySequence, getAction
 from bayespy.inference import VB
 import bayespy.plot as bpplt
 
-launchPreProcessing()
+#launchPreProcessing()
 
 transictionMatrix, initialPro = computeTransitionMatrix('A')
 osservationMatrix = computeOsservationMatrix('A')
 
-# print(transictionMatrix)
-
+print(initialPro)
+print(transictionMatrix)
+print(osservationMatrix)
 print("")
 print("######################################")
 print("#", end = " ")
@@ -26,6 +27,100 @@ print("{:<28}{:<7}".format("OSSERVATION MATRIX SIZE: ", str(osservationMatrix.sh
 print("#")
 print("######################################")
 print("")
+
+
+
+#hmmlearn
+import numpy as np
+from hmmlearn import hmm
+states = ('Rainy', 'Sunny')
+ 
+observations = ('walk', 'shop', 'clean')
+ 
+start_probability = {'Rainy': 0.6, 'Sunny': 0.4}
+ 
+transition_probability = {
+   'Rainy' : {'Rainy': 0.7, 'Sunny': 0.3},
+   'Sunny' : {'Rainy': 0.4, 'Sunny': 0.6},
+   }
+ 
+emission_probability = {
+   'Rainy' : {'walk': 0.1, 'shop': 0.4, 'clean': 0.5},
+   'Sunny' : {'walk': 0.6, 'shop': 0.3, 'clean': 0.1},
+   }
+
+from hmmlearn import hmm
+import numpy as np
+import math
+
+model = hmm.MultinomialHMM(n_components=2)
+model.startprob_ = np.array([0.6, 0.4])
+model.transmat_ = np.array([[0.7, 0.3],
+                            [0.4, 0.6]])
+model.emissionprob_ = np.array([[0.1, 0.4, 0.5],
+                                [0.6, 0.3, 0.1]])
+
+#problema 1, likelihood di avere una sequenza O (np.array([[oss1, oss2, oss3]]))
+#usiamo math.exp perchè altrimenti sarebbe un logaritmo
+like = math.exp(model.score(np.array([[2,2,2]]))) #probabilità di avere oservations[2] per 3 volte di seguito
+print(like)
+
+#problema 2, viterbi
+logprob, seq = model.decode(np.array([[1,2,0]]).transpose())
+print(math.exp(logprob))
+print(seq)
+
+#prova con esercizio visto in classe
+model = hmm.MultinomialHMM(n_components=2)
+model.startprob_ = np.array([0.5, 0.5])
+model.transmat_ = np.array([[0.7, 0.3],
+                            [0.4, 0.6]])
+model.emissionprob_ = np.array([[0.4, 0.6],
+                                [0.8, 0.2]])
+
+#problema 1, likelihood di avere una sequenza O (np.array([[oss1, oss2, oss3]]))
+#usiamo math.exp perchè altrimenti sarebbe un logaritmo
+like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
+print(like)
+
+#non so
+posteriors = model.predict_proba(np.array([[0]]))
+print(posteriors)
+
+#problema 2, viterbi
+logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
+print(math.exp(logprob))
+print(seq)
+
+
+'''
+import random
+from yahmm import *
+
+model = Model(name='HouseModel')
+breakfast = State(DiscreteDistribution( {'SeatPressureLiving': 0.1, 'CupboardMagneticKitchen': 0.4, 'FridgeMagneticKitchen': 0.4, 'CooktopPIRKitchen': 0.1 }))
+spare_time = State(DiscreteDistribution( {'SeatPressureLiving': 0.7, 'CupboardMagneticKitchen': 0.1, 'FridgeMagneticKitchen': 0.1, 'CooktopPIRKitchen': 0.1 }))
+
+model.add_transition(model.start, breakfast, 0.5)
+model.add_transition(model.start, spare_time, 0.5)
+
+model.add_transition(breakfast, breakfast, 0.65)
+model.add_transition(breakfast, spare_time, 0.25)
+model.add_transition(spare_time, breakfast, 0.15)
+model.add_transition(spare_time, spare_time, 0.75)
+
+
+model.add_transition(breakfast, model.end, 0.1)
+model.add_transition(spare_time, model.end, 0.1)
+
+Model.draw(model)
+model.bake()
+
+print(model.sample)'''
+'''
+print(distribution)
+print(state)
+
 
 
 firstOrderMC = CategoricalMarkovChain(initialPro, transictionMatrix, states = 391)
@@ -42,9 +137,11 @@ observedProcess.observe(osservation)
 inferenceProcess = VB(observedProcess, firstOrderMC)
 
 inferenceProcess.update()
-
+import bayespy.plot as bpplt
+bpplt.plot(firstOrderMC)
+bpplt.plot(1-correctActivity, color='r', marker='x')
 inferenceProcess.plot_iteration_by_nodes()
-
+'''
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
