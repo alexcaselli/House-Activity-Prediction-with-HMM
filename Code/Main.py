@@ -5,15 +5,51 @@ from ComputeMatrix import computeTransitionMatrix, computeOsservationMatrix
 from ModelRating import getCorrectActivitySequence, getAction
 from bayespy.inference import VB
 import bayespy.plot as bpplt
+from hmmlearn import hmm
+import math
 
 #launchPreProcessing()
 
 transictionMatrix, initialPro = computeTransitionMatrix('A')
 osservationMatrix = computeOsservationMatrix('A')
 
-print(initialPro)
-print(transictionMatrix)
-print(osservationMatrix)
+# print(type(initialPro))
+# print(initialPro)
+print("")
+# print(type(transictionMatrix))
+# print(transictionMatrix)
+print("")
+# print(type(osservationMatrix))
+# print(osservationMatrix)
+print("")
+
+
+model = hmm.MultinomialHMM(n_components=9)
+model.startprob_ = np.array(initialPro[0])
+model.transmat_ = np.array([transictionMatrix[0],
+                           transictionMatrix[1],
+                           transictionMatrix[2],
+                           transictionMatrix[3],
+                           transictionMatrix[4],
+                           transictionMatrix[5],
+                           transictionMatrix[6],
+                           transictionMatrix[7],
+                           transictionMatrix[8]])
+      
+model.emissionprob_ = np.array([osservationMatrix[0],
+                                osservationMatrix[1],
+                                osservationMatrix[2],
+                                osservationMatrix[3],
+                                osservationMatrix[4],
+                                osservationMatrix[5],
+                                osservationMatrix[6],
+                                osservationMatrix[7],
+                                osservationMatrix[8]])
+
+# print(model.startprob_)
+# print(model.transmat_)
+# print(model.emissionprob_)
+
 print("")
 print("######################################")
 print("#", end = " ")
@@ -28,8 +64,18 @@ print("#")
 print("######################################")
 print("")
 
+like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
+posteriors = model.predict(np.array([[1]]))
+print("POSTERIORS VALUE: ", posteriors)
 
+# [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
+#  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
 
+# ['0: BasinPIRBathroom', 1: 'BedPressureBedroom', 2: 'CabinetMagneticBathroom', 
+#  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
+#  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
+#  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom']
+'''
 #hmmlearn
 import numpy as np
 from hmmlearn import hmm
@@ -93,7 +139,7 @@ print(math.exp(logprob))
 print(seq)
 
 
-'''
+
 import random
 from yahmm import *
 
@@ -143,12 +189,6 @@ bpplt.plot(1-correctActivity, color='r', marker='x')
 inferenceProcess.plot_iteration_by_nodes()
 '''
 
-# [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
-#  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
 
-# ['0: BasinPIRBathroom', 1: 'BedPressureBedroom', 2: 'CabinetMagneticBathroom', 
-#  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
-#  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
-#  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom']
 
 
