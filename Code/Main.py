@@ -13,15 +13,18 @@ import math
 transictionMatrix, initialPro = computeTransitionMatrix('A')
 osservationMatrix = computeOsservationMatrix('A')
 
+actionObserved = getAction("A")
+correctActivity = getCorrectActivitySequence("A")
+
 # print(type(initialPro))
 # print(initialPro)
-print("")
+# print("")
 # print(type(transictionMatrix))
 # print(transictionMatrix)
-print("")
+# print("")
 # print(type(osservationMatrix))
 # print(osservationMatrix)
-print("")
+# print("")
 
 
 model = hmm.MultinomialHMM(n_components=9)
@@ -65,8 +68,19 @@ print("######################################")
 print("")
 
 like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
-posteriors = model.predict(np.array([[1]]))
-print("POSTERIORS VALUE: ", posteriors)
+posteriors = model.predict(actionObserved.T)
+print("ACTIVITY FROM OBSERVATION VALUE: ", posteriors)
+
+cont = 0
+for activity in range(0, len(correctActivity[0])):
+   if posteriors[activity] != correctActivity[0][activity]:
+      # print(activity)
+      # print(posteriors[activity])
+      # print(correctActivity[0][activity])
+      cont += 1
+      # print("")
+
+print("WRONG INFERENCE: ", cont)
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
