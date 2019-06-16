@@ -129,29 +129,29 @@ print(like)
 logprob, seq = model.decode(np.array([[1,2,0]]).transpose())
 print(math.exp(logprob))
 print(seq)
-
+'''
 #prova con esercizio visto in classe
 model = hmm.MultinomialHMM(n_components=2)
 model.startprob_ = np.array([0.5, 0.5])
 model.transmat_ = np.array([[0.7, 0.3],
-                            [0.4, 0.6]])
-model.emissionprob_ = np.array([[0.4, 0.6],
-                                [0.8, 0.2]])
+                            [0.3, 0.7]])
+model.emissionprob_ = np.array([[0.9, 0.1],
+                                [0.2, 0.8]])
 
 #problema 1, likelihood di avere una sequenza O (np.array([[oss1, oss2, oss3]]))
 #usiamo math.exp perchè altrimenti sarebbe un logaritmo
-like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
-print(like)
+# like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
+# print(like)
 
 #non so
-posteriors = model.predict_proba(np.array([[0]]))
+posteriors = model.predict_proba(np.array([[0, 0, 1, 0]]).T)
 print(posteriors)
 
 #problema 2, viterbi
-logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
-print(math.exp(logprob))
-print(seq)
-
+# logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
+# print(math.exp(logprob))
+# print(seq)
+'''
 
 
 import random
