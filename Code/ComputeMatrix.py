@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import csv
+from math import floor
 
 def computeTransitionMatrix(home):
 	home = './Dataset/datasetCSV/labeled'+home+'.csv'
@@ -39,7 +40,11 @@ def calculateT(csv_file):
 	times = np.zeros([1,len(sor)])
 	prev = ''
 
-	for activity in saved_column:
+	#training samples
+	lim = floor(len(saved_column)*70/100)
+
+
+	for activity in saved_column[0:lim]:
 		if prev == '':
 			# print('first')
 			prev = activity
@@ -121,7 +126,7 @@ def calculateO(csv_file):
 		oss_sor = ['BasinPIRBathroom', 'BedPressureBedroom', 'CabinetMagneticBathroom', 'CooktopPIRKitchen', 'CupboardMagneticKitchen', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance', 'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToasterElectricKitchen', 'ToiletFlushBathroom']
 	else:
 		oss_sor = ['BasinPIRBathroom', 'BedPressureBedroom', 'CupboardMagneticKitchen', 'DoorPIRBedroom', 'DoorPIRKitchen', 'DoorPIRLiving', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance', 'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToiletFlushBathroom']
-		print(len(oss_sor))
+	print(len(oss_sor))
 
 	#Stati ordinati senza duplicati
 	if 'labeledA' in csv_file:
