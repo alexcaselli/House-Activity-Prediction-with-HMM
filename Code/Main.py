@@ -10,11 +10,19 @@ import math
 
 #launchPreProcessing()
 
+home = 'A'
 transictionMatrix, initialPro = computeTransitionMatrix('A')
 osservationMatrix = computeOsservationMatrix('A')
 
-actionObserved = getAction("A")
-correctActivity = getCorrectActivitySequence("A")
+actionObserved = getAction("A", 'test')
+correctActivity = getCorrectActivitySequence("A", 'test')
+'''
+home = 'B'
+transictionMatrix, initialPro = computeTransitionMatrix('B')
+osservationMatrix = computeOsservationMatrix('B')
+
+actionObserved = getAction("B", 'test')
+correctActivity = getCorrectActivitySequence("B", 'test')'''
 
 # print(type(initialPro))
 # print(initialPro)
@@ -26,28 +34,52 @@ correctActivity = getCorrectActivitySequence("A")
 # print(osservationMatrix)
 # print("")
 
-
-model = hmm.MultinomialHMM(n_components=9)
-model.startprob_ = np.array(initialPro[0])
-model.transmat_ = np.array([transictionMatrix[0],
-                           transictionMatrix[1],
-                           transictionMatrix[2],
-                           transictionMatrix[3],
-                           transictionMatrix[4],
-                           transictionMatrix[5],
-                           transictionMatrix[6],
-                           transictionMatrix[7],
-                           transictionMatrix[8]])
-      
-model.emissionprob_ = np.array([osservationMatrix[0],
-                                osservationMatrix[1],
-                                osservationMatrix[2],
-                                osservationMatrix[3],
-                                osservationMatrix[4],
-                                osservationMatrix[5],
-                                osservationMatrix[6],
-                                osservationMatrix[7],
-                                osservationMatrix[8]])
+if (home == 'A'):
+   model = hmm.MultinomialHMM(n_components=9)
+   model.startprob_ = np.array(initialPro[0])
+   model.transmat_ = np.array([transictionMatrix[0],
+                              transictionMatrix[1],
+                              transictionMatrix[2],
+                              transictionMatrix[3],
+                              transictionMatrix[4],
+                              transictionMatrix[5],
+                              transictionMatrix[6],
+                              transictionMatrix[7],
+                              transictionMatrix[8]])
+         
+   model.emissionprob_ = np.array([osservationMatrix[0],
+                                 osservationMatrix[1],
+                                 osservationMatrix[2],
+                                 osservationMatrix[3],
+                                 osservationMatrix[4],
+                                 osservationMatrix[5],
+                                 osservationMatrix[6],
+                                 osservationMatrix[7],
+                                 osservationMatrix[8]])
+else:
+      model = hmm.MultinomialHMM(n_components=10)
+      model.startprob_ = np.array(initialPro[0])
+      model.transmat_ = np.array([transictionMatrix[0],
+                                 transictionMatrix[1],
+                                 transictionMatrix[2],
+                                 transictionMatrix[3],
+                                 transictionMatrix[4],
+                                 transictionMatrix[5],
+                                 transictionMatrix[6],
+                                 transictionMatrix[7],
+                                 transictionMatrix[8],
+                                 transictionMatrix[9]])
+            
+      model.emissionprob_ = np.array([osservationMatrix[0],
+                                    osservationMatrix[1],
+                                    osservationMatrix[2],
+                                    osservationMatrix[3],
+                                    osservationMatrix[4],
+                                    osservationMatrix[5],
+                                    osservationMatrix[6],
+                                    osservationMatrix[7],
+                                    osservationMatrix[8],
+                                    osservationMatrix[9]])
 
 # print(model.startprob_)
 # print(model.transmat_)
@@ -80,7 +112,7 @@ for activity in range(0, len(correctActivity[0])):
       cont += 1
       # print("")
 
-print("WRONG INFERENCE: ", cont)
+print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
