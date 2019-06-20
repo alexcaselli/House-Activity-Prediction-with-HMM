@@ -1,8 +1,9 @@
 import csv
 import numpy as np
+from math import floor
 
 
-def getCorrectActivitySequence(home):
+def getCorrectActivitySequence(home, stage):
 
     activity = list()
 
@@ -12,8 +13,11 @@ def getCorrectActivitySequence(home):
         #dictionary for indexing in T
         activ_dict = {}
         index = 0
+        if (home == 'A'):
+            sorted_act = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+        else:
+            sorted_act = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
-        sorted_act = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
         for act in sorted_act:
             activ_dict[act] = index
             index += 1
@@ -21,39 +25,20 @@ def getCorrectActivitySequence(home):
         for line in reader:
             act_name = line[1]
             activity.append(activ_dict[act_name])
-        '''
-        for line in reader:
-            if line[1] == "Breakfast":
-                activity.append(0)
-            elif line[1] == "Grooming":
-                activity.append(1)
-            elif line[1] == "Leaving":
-                activity.append(2)
-            elif line[1] == "Lunch":
-                activity.append(3)
-            elif line[1] == "Showering":
-                activity.append(4)
-            elif line[1] == "Sleeping":
-                activity.append(5)
-            elif line[1] == "Snack":
-                activity.append(6)
-            elif line[1] == "Spare_Time/TV":
-                activity.append(7)
-            elif line[1] == "Toileting":
-                activity.append(8)
-            else:
-                print("this is a problem...")
-                print(line)
-        '''
-        # print(activity)
-
-    return np.array([activity])
+        
+    # print(actionSequence)
+    if (stage == 'test'):
+        #test samples
+        lim = floor(len(activity)*70/100)
+        return np.array([activity[lim+1:len(activity)-1]])
+    else:
+        return np.array([activity])
 
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
 
-def getAction(home):
+def getAction(home, stage):
 
     actionSequence = list()
 
@@ -61,8 +46,12 @@ def getAction(home):
         reader = csv.reader(action, delimiter = ';', quoting=csv.QUOTE_ALL)
         next(reader)
 
-        sorted_oss = ['BasinPIRBathroom', 'BedPressureBedroom', 'CabinetMagneticBathroom', 'CooktopPIRKitchen', 'CupboardMagneticKitchen', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance',
-         'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToasterElectricKitchen', 'ToiletFlushBathroom']
+        if (home == 'A'):
+            sorted_oss = ['BasinPIRBathroom', 'BedPressureBedroom', 'CabinetMagneticBathroom', 'CooktopPIRKitchen', 'CupboardMagneticKitchen', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance',
+                'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToasterElectricKitchen', 'ToiletFlushBathroom']
+        else:
+            sorted_oss = ['BasinPIRBathroom', 'BedPressureBedroom', 'CupboardMagneticKitchen', 'DoorPIRBedroom', 'DoorPIRKitchen', 'DoorPIRLiving', 'FridgeMagneticKitchen',
+             'MaindoorMagneticEntrance', 'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToiletFlushBathroom']
 
         #dictionary for indexing Activity in O
         oss_dict = {}
@@ -77,42 +66,13 @@ def getAction(home):
             actionSequence.append(oss_dict[action])
 
 
-        '''
-        for line in reader:
-            action = ""
-            action += line[2]+line[3]+line[4]
-            if action == "BasinPIRBathroom":
-                actionSequence.append(0)
-            elif action == "BedPressureBedroom":
-                actionSequence.append(1)
-            elif action == "CabinetMagneticBathroom":
-                actionSequence.append(2)
-            elif action == "CooktopPIRKitchen":
-                actionSequence.append(3)
-            elif action == "CupboardMagneticKitchen":
-                actionSequence.append(4)
-            elif action == "FridgeMagneticKitchen":
-                actionSequence.append(5)
-            elif action == "MaindoorMagneticEntrance":
-                actionSequence.append(6)
-            elif action == "MicrowaveElectricKitchen":
-                actionSequence.append(7)
-            elif action == "SeatPressureLiving":
-                actionSequence.append(8)
-            elif action == "ShowerPIRBathroom":
-                actionSequence.append(9)
-            elif action == "ToasterElectricKitchen":
-                actionSequence.append(10)
-            elif action == "ToiletFlushBathroom":
-                actionSequence.append(11)
-            else:
-                print("this is a problem...")
-                print(line)
-                '''
-
     # print(actionSequence)
-
-    return np.array([actionSequence])
+    if stage == 'test':
+        #test samples
+        lim = floor(len(actionSequence)*70/100)
+        return np.array([actionSequence[lim+1:len(actionSequence)-1]])
+    else:
+        return np.array([actionSequence])
 
 
     # ['0: BasinPIRBathroom', 1: 'BedPressureBedroom', 2: 'CabinetMagneticBathroom', 
