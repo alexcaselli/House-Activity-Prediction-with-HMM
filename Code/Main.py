@@ -6,23 +6,31 @@ from ModelRating import getCorrectActivitySequence, getAction
 from bayespy.inference import VB
 import bayespy.plot as bpplt
 from hmmlearn import hmm
+from sklearn.metrics import classification_report
 import math
 
 #launchPreProcessing()
 
+
+
 home = 'A'
-transictionMatrix, initialPro = computeTransitionMatrix('A')
-osservationMatrix = computeOsservationMatrix('A')
+transictionMatrix, initialPro = computeTransitionMatrix('A', True)
+osservationMatrix = computeOsservationMatrix('A', True)
 
 actionObserved = getAction("A", 'test')
 correctActivity = getCorrectActivitySequence("A", 'test')
 '''
 home = 'B'
-transictionMatrix, initialPro = computeTransitionMatrix('B')
-osservationMatrix = computeOsservationMatrix('B')
+transictionMatrix, initialPro = computeTransitionMatrix('B', True)
+osservationMatrix = computeOsservationMatrix('B', True)
 
 actionObserved = getAction("B", 'test')
 correctActivity = getCorrectActivitySequence("B", 'test')'''
+
+if home == 'A':
+   targetActivityName = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+elif home == 'B':
+   targetActivityName = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
 # print(type(initialPro))
 # print(initialPro)
@@ -99,20 +107,33 @@ print("#")
 print("######################################")
 print("")
 
+# print(transictionMatrix)
+# print("")
+# print(osservationMatrix)
+
 like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
 posteriors = model.predict(actionObserved.T)
-print("ACTIVITY FROM OBSERVATION VALUE: ", posteriors)
+# print("ACTIVITY FROM OBSERVATION VALUE: ", posteriors)
+
+confusionMatrix = np.zeros((transictionMatrix.shape[0], transictionMatrix.shape[0]))
 
 cont = 0
 for activity in range(0, len(correctActivity[0])):
+
    if posteriors[activity] != correctActivity[0][activity]:
       # print(activity)
       # print(posteriors[activity])
       # print(correctActivity[0][activity])
       cont += 1
       # print("")
+   confusionMatrix[correctActivity[0][activity]][posteriors[activity]] += 1
 
+print(confusionMatrix)
 print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
+
+
+print(classification_report(correctActivity[0], posteriors, target_names=targetActivityName))
+print("")
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
@@ -161,7 +182,7 @@ print(like)
 logprob, seq = model.decode(np.array([[1,2,0]]).transpose())
 print(math.exp(logprob))
 print(seq)
-'''
+
 #prova con esercizio visto in classe
 model = hmm.MultinomialHMM(n_components=2)
 model.startprob_ = np.array([0.5, 0.5])
@@ -186,7 +207,6 @@ print("")
 # logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
 # print(math.exp(logprob))
 # print(seq)
-'''
 
 
 import random

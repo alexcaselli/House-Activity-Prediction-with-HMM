@@ -3,15 +3,15 @@ import numpy as np
 import csv
 from math import floor
 
-def computeTransitionMatrix(home):
+def computeTransitionMatrix(home, test):
 	home = './Dataset/datasetCSV/labeled'+home+'.csv'
-	return calculateT(home)
+	return calculateT(home, test)
 
-def computeOsservationMatrix(home):
+def computeOsservationMatrix(home, test):
 	home = './Dataset/datasetCSV/labeled'+home+'.csv'
-	return calculateO(home)
+	return calculateO(home, test)
 
-def calculateT(csv_file):
+def calculateT(csv_file, test):
 	column_name='ACTIVITY'
 	df = pd.read_csv(csv_file, sep=';')
 	saved_column = df[column_name]
@@ -21,29 +21,32 @@ def calculateT(csv_file):
 	ml = sorted(mylist)
 	# print(ml)
 
-	#['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+	# ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 	if 'labeledA' in csv_file:
 		sor = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 		homeA = True
 	else:
 		sor = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
-	#dictionary for indexing in T
+	# dictionary for indexing in T
 	my_dict = {}
 	index = 0
 	for name in sor:
 		my_dict[name] = index
 		index += 1
 
-	#create the Transition Matrix
+	# create the Transition Matrix
 	T = np.zeros([len(sor),len(sor)])
 	times = np.zeros([1,len(sor)])
 	prev = ''
 
-	#training samples
-	lim = floor(len(saved_column)*70/100)
+	# training samples
+	if test:
+		lim = floor(len(saved_column)*0.7)
+	else:
+		lim = len(saved_column)
 
-
+	print("LIM VALUE FROM COMPUTE MATRIX T: ", lim)
 	for activity in saved_column[0:lim]:
 		if prev == '':
 			# print('first')
@@ -75,13 +78,13 @@ def calculateT(csv_file):
 	# print(T)
 	# print(times)
 
-	#Normalize the matrix 
+	# Normalize the matrix 
 	for i in range(0,T.shape[0]):
 		T[i,:]=T[i,:]/times[0,i]
 	# print(T)
 	# print(times)
 
-	#Create start probabilities
+	# Create start probabilities
 	denominator = sum(times[0])
 
 	check = 0
@@ -94,7 +97,7 @@ def calculateT(csv_file):
 
 	return T, times
 
-def calculateO(csv_file):
+def calculateO(csv_file, test):
 	activity='ACTIVITY'
 	df = pd.read_csv(csv_file, sep=';')
 	activity_column = df[activity]
@@ -126,7 +129,7 @@ def calculateO(csv_file):
 		oss_sor = ['BasinPIRBathroom', 'BedPressureBedroom', 'CabinetMagneticBathroom', 'CooktopPIRKitchen', 'CupboardMagneticKitchen', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance', 'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToasterElectricKitchen', 'ToiletFlushBathroom']
 	else:
 		oss_sor = ['BasinPIRBathroom', 'BedPressureBedroom', 'CupboardMagneticKitchen', 'DoorPIRBedroom', 'DoorPIRKitchen', 'DoorPIRLiving', 'FridgeMagneticKitchen', 'MaindoorMagneticEntrance', 'MicrowaveElectricKitchen', 'SeatPressureLiving', 'ShowerPIRBathroom', 'ToiletFlushBathroom']
-	print(len(oss_sor))
+	# print(len(oss_sor))
 
 	#Stati ordinati senza duplicati
 	if 'labeledA' in csv_file:
@@ -151,8 +154,15 @@ def calculateO(csv_file):
 	#create the Osservation Matrix
 	O = np.zeros([len(sor),len(oss_sor)]) 
 	times = np.zeros([1,len(sor)]) 
+
+	#training samples
+	if test:
+		lim = floor(len(activity_column)*0.7)
+	else:
+		lim = len(activity_column)
 	
-	for i in range(0, len(activity_column)):
+	print("LIM VALUE FROM COMPUTE MATRIX O: ", lim)
+	for i in range(0, lim):
 		O[my_dict[activity_column[i]], my_dict_oss[oss[i]]] +=1
 		times[0, my_dict[activity_column[i]]] += 1 
 		

@@ -29,7 +29,8 @@ def getCorrectActivitySequence(home, stage):
     # print(actionSequence)
     if (stage == 'test'):
         #test samples
-        lim = floor(len(activity)*70/100)
+        lim = floor(len(activity)*0.7)
+        print("LIM VALUE FROM CORRECT ACTIVITY: ", len(activity)- 1 - lim+1)
         return np.array([activity[lim+1:len(activity)-1]])
     else:
         return np.array([activity])
@@ -69,7 +70,8 @@ def getAction(home, stage):
     # print(actionSequence)
     if stage == 'test':
         #test samples
-        lim = floor(len(actionSequence)*70/100)
+        lim = floor(len(actionSequence)*0.7)
+        print("LIM VALUE FROM CORRECT ACTION: ", len(actionSequence)- 1 - lim+1)
         return np.array([actionSequence[lim+1:len(actionSequence)-1]])
     else:
         return np.array([actionSequence])
