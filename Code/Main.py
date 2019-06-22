@@ -1,263 +1,128 @@
-from bayespy.nodes import CategoricalMarkovChain, Categorical, Mixture
-import numpy as np
+# OUR CLASS
 from Preprocessing import launchPreProcessing
 from ComputeMatrix import computeTransitionMatrix, computeOsservationMatrix
-from ModelRating import getCorrectActivitySequence, getAction
-from bayespy.inference import VB
-import bayespy.plot as bpplt
-from hmmlearn import hmm
-from sklearn.metrics import classification_report
+from ModelRating import getCorrectActivitySequence, getAction, printInformation, modelRating
+from BuildModel import buildModel
+
+import warnings
+import pickle
 import math
 
+# DISABLE WARNINGS BY SKLEARN.METRICS
+warnings.filterwarnings('ignore') 
+
+################################ DONE PREPROCESSING ################################
 #launchPreProcessing()
 
 
 
-home = 'A'
-transictionMatrix, initialPro = computeTransitionMatrix('A', True)
-osservationMatrix = computeOsservationMatrix('A', True)
+################################ GET PARAMETER FOR MODEL ################################
+transictionMatrixA, initialProA = computeTransitionMatrix('A', True)
+osservationMatrixA = computeOsservationMatrix('A', True)
+actionObservedA = getAction("A", 'test')
+correctActivityA = getCorrectActivitySequence("A", 'test')
 
-actionObserved = getAction("A", 'test')
-correctActivity = getCorrectActivitySequence("A", 'test')
-'''
-home = 'B'
-transictionMatrix, initialPro = computeTransitionMatrix('B', True)
-osservationMatrix = computeOsservationMatrix('B', True)
+transictionMatrixB, initialProB = computeTransitionMatrix('B', True)
+osservationMatrixB = computeOsservationMatrix('B', True)
+actionObservedB = getAction("B", 'test')
+correctActivityB = getCorrectActivitySequence("B", 'test')
 
-actionObserved = getAction("B", 'test')
-correctActivity = getCorrectActivitySequence("B", 'test')'''
 
-if home == 'A':
-   targetActivityName = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
-elif home == 'B':
-   targetActivityName = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
-# print(type(initialPro))
-# print(initialPro)
-# print("")
-# print(type(transictionMatrix))
-# print(transictionMatrix)
-# print("")
-# print(type(osservationMatrix))
-# print(osservationMatrix)
-# print("")
+################################ SET TARGET ACTIVITY ################################
+targetActivityNameA = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+targetActivityNameB = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
 
-if (home == 'A'):
-   model = hmm.MultinomialHMM(n_components=9)
-   model.startprob_ = np.array(initialPro[0])
-   model.transmat_ = np.array([transictionMatrix[0],
-                              transictionMatrix[1],
-                              transictionMatrix[2],
-                              transictionMatrix[3],
-                              transictionMatrix[4],
-                              transictionMatrix[5],
-                              transictionMatrix[6],
-                              transictionMatrix[7],
-                              transictionMatrix[8]])
-         
-   model.emissionprob_ = np.array([osservationMatrix[0],
-                                 osservationMatrix[1],
-                                 osservationMatrix[2],
-                                 osservationMatrix[3],
-                                 osservationMatrix[4],
-                                 osservationMatrix[5],
-                                 osservationMatrix[6],
-                                 osservationMatrix[7],
-                                 osservationMatrix[8]])
-else:
-      model = hmm.MultinomialHMM(n_components=10)
-      model.startprob_ = np.array(initialPro[0])
-      model.transmat_ = np.array([transictionMatrix[0],
-                                 transictionMatrix[1],
-                                 transictionMatrix[2],
-                                 transictionMatrix[3],
-                                 transictionMatrix[4],
-                                 transictionMatrix[5],
-                                 transictionMatrix[6],
-                                 transictionMatrix[7],
-                                 transictionMatrix[8],
-                                 transictionMatrix[9]])
-            
-      model.emissionprob_ = np.array([osservationMatrix[0],
-                                    osservationMatrix[1],
-                                    osservationMatrix[2],
-                                    osservationMatrix[3],
-                                    osservationMatrix[4],
-                                    osservationMatrix[5],
-                                    osservationMatrix[6],
-                                    osservationMatrix[7],
-                                    osservationMatrix[8],
-                                    osservationMatrix[9]])
 
-# print(model.startprob_)
-# print(model.transmat_)
-# print(model.emissionprob_)
 
+################################ SHOW INFORMATION ################################
+# printInformation(initialProA, transictionMatrixA, osservationMatrixA, actionObservedA, correctActivityA)
+# printInformation(initialProB, transictionMatrixB, osservationMatrixB, actionObservedB, correctActivityB)
+
+
+
+################################ MODEL BUILDING ################################
+modelA = buildModel(initialProA, transictionMatrixA, osservationMatrixA)
+modelB = buildModel(initialProB, transictionMatrixB, osservationMatrixB)
+
+
+
+################################ MODEL RATING ################################
+print("---------------MODEL A RATING---------------")
+modelRating(modelA, actionObservedA, correctActivityA, len(transictionMatrixA), targetActivityNameA)
+print("--------------------------------------------")
 print("")
-print("######################################")
-print("#", end = " ")
-print("{:<28}{:<7}".format("TRANSICTION MATRIX SIZE: ", str(transictionMatrix.shape)), end = "")
-print("#")
-print("#", end = " ")
-print("{:<28}{:<7}".format("INITIAL PROBABILITIES SIZE: ", str(initialPro.shape)), end = "")
-print("#")
-print("#", end = " ")
-print("{:<28}{:<7}".format("OSSERVATION MATRIX SIZE: ", str(osservationMatrix.shape)), end = "")
-print("#")
-print("######################################")
+print("---------------MODEL B RATING---------------")
+modelRating(modelB, actionObservedB, correctActivityB, len(transictionMatrixB), targetActivityNameB)
+print("--------------------------------------------")
+print(" ")
+
+print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-")
+print("-.-.-.-.-.-.-.-FINAL MODEL-.-.-.-.-.-.-.-")
+################################ GET FINAL MODEL ################################
+transictionMatrixA, initialProA = computeTransitionMatrix('A', False)
+osservationMatrixA = computeOsservationMatrix('A', False)
+actionObservedA = getAction("A", 'no_test')
+correctActivityA = getCorrectActivitySequence("A", 'no_test')
+
+transictionMatrixB, initialProB = computeTransitionMatrix('B', False)
+osservationMatrixB = computeOsservationMatrix('B', False)
+actionObservedB = getAction("B", 'no_test')
+correctActivityB = getCorrectActivitySequence("B", 'no_test')
+
+
+
+################################ SET TARGET ACTIVITY ################################
+targetActivityNameA = ['Breakfast', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+targetActivityNameB = ['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting']
+
+
+################################ SHOW INFORMATION ################################
+# printInformation(initialProA, transictionMatrixA, osservationMatrixA, actionObservedA, correctActivityA)
+# printInformation(initialProB, transictionMatrixB, osservationMatrixB, actionObservedB, correctActivityB)
+
+
+
+################################ MODEL BUILDING ################################
+modelA = buildModel(initialProA, transictionMatrixA, osservationMatrixA)
+modelB = buildModel(initialProB, transictionMatrixB, osservationMatrixB)
+
+
+
+################################ MODEL RATING ################################
+print("-.-.-.-.-.-.-.-MODEL A RATING-.-.-.-.-.-.-.-")
+modelRating(modelA, actionObservedA, correctActivityA, len(transictionMatrixA), targetActivityNameA)
+print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
 print("")
-
-# print(transictionMatrix)
-# print("")
-# print(osservationMatrix)
-
-like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
-posteriors = model.predict(actionObserved.T)
-# print("ACTIVITY FROM OBSERVATION VALUE: ", posteriors)
-
-confusionMatrix = np.zeros((transictionMatrix.shape[0], transictionMatrix.shape[0]))
-
-cont = 0
-for activity in range(0, len(correctActivity[0])):
-
-   if posteriors[activity] != correctActivity[0][activity]:
-      # print(activity)
-      # print(posteriors[activity])
-      # print(correctActivity[0][activity])
-      cont += 1
-      # print("")
-   confusionMatrix[correctActivity[0][activity]][posteriors[activity]] += 1
-
-print(confusionMatrix)
-print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
+print("-.-.-.-.-.-.-.-MODEL B RATING-.-.-.-.-.-.-.-")
+modelRating(modelB, actionObservedB, correctActivityB, len(transictionMatrixB), targetActivityNameB)
+print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
+print(" ")
 
 
-print(classification_report(correctActivity[0], posteriors, target_names=targetActivityName))
+################################ SAVING MODEL ################################
+with open("./Model/HouseA.pkl", "wb") as fileA: 
+   pickle.dump(modelA, fileA)
+with open("./Model/HouseB.pkl", "wb") as fileB: 
+   pickle.dump(modelB, fileB)
+
+
+
+################################ TEST LOAD MODEL ################################
+with open("./Model/HouseA.pkl", "rb") as fileA: 
+   modelA = pickle.load(fileA)
+with open("./Model/HouseB.pkl", "rb") as fileB: 
+   modelB = pickle.load(fileB)
+
+
+
+################################ MODEL RATING ################################
+print("-.-.-.-.-.-.-.-MODEL A RATING-.-.-.-.-.-.-.-")
+modelRating(modelA, actionObservedA, correctActivityA, len(transictionMatrixA), targetActivityNameA)
+print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
 print("")
-
-# [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
-#  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
-
-# ['0: BasinPIRBathroom', 1: 'BedPressureBedroom', 2: 'CabinetMagneticBathroom', 
-#  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
-#  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
-#  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom']
-'''
-#hmmlearn
-import numpy as np
-from hmmlearn import hmm
-states = ('Rainy', 'Sunny')
- 
-observations = ('walk', 'shop', 'clean')
- 
-start_probability = {'Rainy': 0.6, 'Sunny': 0.4}
- 
-transition_probability = {
-   'Rainy' : {'Rainy': 0.7, 'Sunny': 0.3},
-   'Sunny' : {'Rainy': 0.4, 'Sunny': 0.6},
-   }
- 
-emission_probability = {
-   'Rainy' : {'walk': 0.1, 'shop': 0.4, 'clean': 0.5},
-   'Sunny' : {'walk': 0.6, 'shop': 0.3, 'clean': 0.1},
-   }
-
-from hmmlearn import hmm
-import numpy as np
-import math
-
-model = hmm.MultinomialHMM(n_components=2)
-model.startprob_ = np.array([0.6, 0.4])
-model.transmat_ = np.array([[0.7, 0.3],
-                            [0.4, 0.6]])
-model.emissionprob_ = np.array([[0.1, 0.4, 0.5],
-                                [0.6, 0.3, 0.1]])
-
-#problema 1, likelihood di avere una sequenza O (np.array([[oss1, oss2, oss3]]))
-#usiamo math.exp perchè altrimenti sarebbe un logaritmo
-like = math.exp(model.score(np.array([[2,2,2]]))) #probabilità di avere oservations[2] per 3 volte di seguito
-print(like)
-
-#problema 2, viterbi
-logprob, seq = model.decode(np.array([[1,2,0]]).transpose())
-print(math.exp(logprob))
-print(seq)
-
-#prova con esercizio visto in classe
-model = hmm.MultinomialHMM(n_components=2)
-model.startprob_ = np.array([0.5, 0.5])
-model.transmat_ = np.array([[0.7, 0.3],
-                            [0.3, 0.7]])
-model.emissionprob_ = np.array([[0.9, 0.1],
-                                [0.2, 0.8]])
-
-#problema 1, likelihood di avere una sequenza O (np.array([[oss1, oss2, oss3]]))
-#usiamo math.exp perchè altrimenti sarebbe un logaritmo
-# like = math.exp(model.score(np.array([[0]]))) #probabilità di avere oservations[2] per 3 volte di seguito
-# print(like)
-
-#non so
-posteriors = model.predict_proba(np.array([[0, 0, 1, 0]]).T)
-print(posteriors)
-print("")
-# viterbi = model.predict_proba(np.array([[1, 0, 1]]).T)
-# print(viterbi)
-
-#problema 2, viterbi
-# logprob, seq = model.decode(np.array([[0,1,1]]).transpose())
-# print(math.exp(logprob))
-# print(seq)
-
-
-import random
-from yahmm import *
-
-model = Model(name='HouseModel')
-breakfast = State(DiscreteDistribution( {'SeatPressureLiving': 0.1, 'CupboardMagneticKitchen': 0.4, 'FridgeMagneticKitchen': 0.4, 'CooktopPIRKitchen': 0.1 }))
-spare_time = State(DiscreteDistribution( {'SeatPressureLiving': 0.7, 'CupboardMagneticKitchen': 0.1, 'FridgeMagneticKitchen': 0.1, 'CooktopPIRKitchen': 0.1 }))
-
-model.add_transition(model.start, breakfast, 0.5)
-model.add_transition(model.start, spare_time, 0.5)
-
-model.add_transition(breakfast, breakfast, 0.65)
-model.add_transition(breakfast, spare_time, 0.25)
-model.add_transition(spare_time, breakfast, 0.15)
-model.add_transition(spare_time, spare_time, 0.75)
-
-
-model.add_transition(breakfast, model.end, 0.1)
-model.add_transition(spare_time, model.end, 0.1)
-
-Model.draw(model)
-model.bake()
-
-print(model.sample)'''
-'''
-print(distribution)
-print(state)
-
-
-
-firstOrderMC = CategoricalMarkovChain(initialPro, transictionMatrix, states = 391)
-observedProcess = Mixture(firstOrderMC, Categorical, osservationMatrix)
-
-correctActivity = getCorrectActivitySequence("A")
-# print(len(correctActivity[0]))
-
-osservation = getAction("A")
-# print(len(osservation[0]))
-
-observedProcess.observe(osservation)
-
-inferenceProcess = VB(observedProcess, firstOrderMC)
-
-inferenceProcess.update()
-import bayespy.plot as bpplt
-bpplt.plot(firstOrderMC)
-bpplt.plot(1-correctActivity, color='r', marker='x')
-inferenceProcess.plot_iteration_by_nodes()
-'''
-
-
-
+print("-.-.-.-.-.-.-.-MODEL B RATING-.-.-.-.-.-.-.-")
+modelRating(modelB, actionObservedB, correctActivityB, len(transictionMatrixB), targetActivityNameB)
+print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
+print(" ")
 
