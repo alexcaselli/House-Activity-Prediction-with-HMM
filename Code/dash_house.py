@@ -19,7 +19,7 @@ app.layout = html.Div([
         'textAlign': 'center'}),
   html.Div([html.Button('O', id='seat')], style = {'height': 38, 'width': 66, 'position':'relative', 'top':450, 'left':850}),
   html.Div([html.Button('O', id='cook')], style = {'height': 38, 'width': 66, 'position':'relative', 'top':433, 'left':1075})
-], style={"height" : "100vh", "background-image": 'url("https://i.ibb.co/f8HwzyQ/wall.jpg")', 'background-repeat': 'no-repeat', 'background-position': 'center'})
+], style={"height" : "100vh", "background-image": 'url("https://i.ibb.co/WDNZjy7/Home.png")', 'background-repeat': 'no-repeat', 'background-position': 'center'})
 
 
 '''                              'layout': {
