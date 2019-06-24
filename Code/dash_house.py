@@ -6,6 +6,7 @@ import dash_table
 import os
 import plotly.graph_objs as go
 import dash_dangerously_set_inner_html
+from dash.dependencies import Input, Output
 
 
 
@@ -17,9 +18,15 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div([
   html.H1('Mother Sensor', style={
         'textAlign': 'center'}),
-  html.Div([html.Button('O', id='seat')], style = {'height': 38, 'width': 66, 'position':'relative', 'top':450, 'left':850}),
-  html.Div([html.Button('O', id='cook')], style = {'height': 38, 'width': 66, 'position':'relative', 'top':433, 'left':1075})
-], style={"height" : "100vh", "background-image": 'url("https://i.ibb.co/WDNZjy7/Home.png")', 'background-repeat': 'no-repeat', 'background-position': 'center'})
+
+  #Perfect button      
+  html.Button(id='seat', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'pir', n_clicks=0,
+    style = {'position':'relative', 'top':130, 'left':340, 'border': 'none'}),
+
+
+  html.Div(id='result')
+], style={"height" : "100vh", "background-image": 'url("https://i.ibb.co/Nj74KSS/Modelli540.png")', 'background-repeat': 'no-repeat', 'background-position': 'center'})
+
 
 
 '''                              'layout': {
@@ -27,6 +34,21 @@ app.layout = html.Div([
                                     'margin': {
                                         'l': 10, 'b': 20, 't': 0, 'r': 0
                                     }'''
+
+
+
+#testing button callbacks, senza n_clicks lo esegue anche senza cliccare
+@app.callback(Output('result', 'children'),
+              [Input('seat', 'n_clicks'), Input('seat', 'name')])
+def displayClick(n_clicks, btn):
+    print(n_clicks)
+    if(int(n_clicks) > 0):
+      msg = 'spare time'
+      
+    else:
+      msg = ''
+    return msg
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
