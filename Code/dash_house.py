@@ -24,15 +24,20 @@ activityName = list()
 with open("./Model/HouseA.pkl", "rb") as fileA: 
    modelA = pickle.load(fileA)
 
+with open("./Model/HouseB.pkl", "rb") as fileB: 
+   modelB = pickle.load(fileB)
+
 
 app.layout = html.Div([
-
+  html.H1('Mother Sensor', style={
+        'textAlign': 'center'}),
 ################### ADD BUTTON FOR HOME A ###################
   dcc.Tabs(id="tabs", children=[
-    dcc.Tab(label='CasaA', children=[
 
-      html.H1('Mother Sensor', style={
+    dcc.Tab(label='Casa A', children=[
+      html.H3('Casa A', style={
         'textAlign': 'center'}),
+     
 
 
 
@@ -56,7 +61,7 @@ app.layout = html.Div([
       
       # Cupboard Magnetic Kitchen
       html.Button(id='CupboardMagneticKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CMK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':280, 'left':-80, 'border': 'none'}), 
+        style = {'position':'relative', 'top':275, 'left':-80, 'border': 'none'}), 
 
       # Fridge Magnetic Kitchen
       html.Button(id='FridgeMagneticKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'FMK', n_clicks_timestamp=0,
@@ -68,7 +73,7 @@ app.layout = html.Div([
 
       # Microwave Electric Kitchen 
       html.Button(id='MicrowaveElectricKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'MEK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':50, 'left':-427, 'border': 'none'}), 
+        style = {'position':'relative', 'top':55, 'left':-385, 'border': 'none'}), 
 
       #Seat Pressure Living (before: 'top':130, 'left':340)      
       html.Button(id='SeatPressureLiving', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPL', n_clicks_timestamp=0,
@@ -80,7 +85,7 @@ app.layout = html.Div([
       
       # Toaster Electric Kitchen
       html.Button(id='ToasterElectricKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TEK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':200, 'left':-625, 'border': 'none'}), 
+        style = {'position':'relative', 'top':197, 'left':-640, 'border': 'none'}), 
 
       # Toilet Flush Bathroom
       html.Button(id='ToiletFlushBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TFB', n_clicks_timestamp=0,
@@ -88,13 +93,84 @@ app.layout = html.Div([
 
 
 
-      html.Div(id='result')
+     
 
-      ], style={"height" : "1000px", 'position':'relative', 'top':50 , 'left':'65vh', "background-image": 'url("https://i.ibb.co/Nj74KSS/Modelli648.png")', 'background-repeat': 'no-repeat'}),
-
-      
+      ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
+     html.Div(id='result', style={
+        'textAlign': 'center'}),
+       
     ]),
+
+
+
+
+
+    #CASA B #########################################################################################
     dcc.Tab(label='CasaB', children=[
+
+    html.H3('Casa B', style={
+        'textAlign': 'center'}),
+     
+
+
+
+      html.Div([
+
+      # Basin Pir Bathroom
+      html.Button(id='BasinPIRBathroom_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'BPB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':200, 'left': 740, 'border': 'none'}),    
+      
+      # Bed Pressure Bedroom
+      html.Button(id='BedPressureBedroom_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'BePBe', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':100, 'left':490, 'border': 'none'}),
+
+      # Cabinet Magnetic Bathroom
+      html.Button(id='CabinetMagneticBathroom_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CMB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':260, 'left':630, 'border': 'none'}),   
+
+      # Cooktop PIR Kitchen
+      html.Button(id='CooktopPIRKitchen_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CPK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':167, 'left':15, 'border': 'none'}), 
+      
+      # Cupboard Magnetic Kitchen
+      html.Button(id='CupboardMagneticKitchen_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CMK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':275, 'left':-80, 'border': 'none'}), 
+
+      # Fridge Magnetic Kitchen
+      html.Button(id='FridgeMagneticKitchen_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'FMK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':35, 'left':-75, 'border': 'none'}), 
+
+      # Maindoor Magnetic Entrance
+      html.Button(id='MaindoorMagneticEntrance_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'MME', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':430, 'left':-550, 'border': 'none'}), 
+
+      # Microwave Electric Kitchen 
+      html.Button(id='MicrowaveElectricKitchen_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'MEK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':55, 'left':-385, 'border': 'none'}), 
+
+      #Seat Pressure Living (before: 'top':130, 'left':340)      
+      html.Button(id='SeatPressureLiving_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPL', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':135, 'left':-800, 'border': 'none'}),
+
+      # Shower PIR Bathroom
+      html.Button(id='ShowerPIRBathroom_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':48, 'left':-210, 'border': 'none'}),
+      
+      # Toaster Electric Kitchen
+      html.Button(id='ToasterElectricKitchen_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TEK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':197, 'left':-640, 'border': 'none'}), 
+
+      # Toilet Flush Bathroom
+      html.Button(id='ToiletFlushBathroom_B', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TFB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':175, 'left':-335, 'border': 'none'}),
+
+
+
+     
+
+      ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
+     html.Div(id='result_B', style={
+        'textAlign': 'center'}),
     ]),
 
   ]),
@@ -155,7 +231,7 @@ def displayClick(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act
       
       print("ACTION OBSERVED: ", actionObservedList)
       print("INFERENCE: ", modelA.predict(np.array([actionObservedList]).T))
-      translateNumberToActivity(actionObservedList)
+      translateNumberToActivity(actionObservedList, 'A')
       print("")
 
     if len(activityName) == 0:
@@ -167,48 +243,123 @@ def displayClick(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act
           html.H2("Activity"),
           html.H4(activityName)
 
-      ], style={'position':'relative', 'top':500})
+      ])
+
+  
 
 ################### TRANSLATE NUMBER ACTION TO LITERAL ACTIVITY###################
-def translateNumberToActivity(actionObservedList):
+def translateNumberToActivity(actionObservedList, house):
   activity = list()
   activityName.clear()
 
-  lastActivityDistribution = list(modelA.predict_proba(np.array([actionObservedList]).T))[-1]
+  if house=='A':
 
-  with open('./Data/InferenceHomeA.csv', mode='w') as infereceA:
-    infereceAWriter = csv.writer(infereceA, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    
+    lastActivityDistribution = list(modelA.predict_proba(np.array([actionObservedList]).T))[-1]
 
-    infereceAWriter.writerow(['Breakfast', 'Grooming', 'Leaving', "Lunch", "Showering", "Sleeping", "Snack", "Spare_Time/TV", "Toileting"])
-    infereceAWriter.writerow([lastActivityDistribution[0], lastActivityDistribution[1], lastActivityDistribution[2], lastActivityDistribution[3], 
-                              lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
-                              lastActivityDistribution[8]])
+    with open('./Data/InferenceHomeA.csv', mode='w') as infereceA:
+      infereceAWriter = csv.writer(infereceA, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+      
 
-  activity = list(modelA.predict(np.array([actionObservedList]).T))
-  for singleActivity in activity:
-    if singleActivity == 0:
-      activityName.append(" Breakfast")
-    elif singleActivity == 1:
-      activityName.append(" Grooming")
-    elif singleActivity == 2:
-      activityName.append(" Leaving")
-    elif singleActivity == 3:
-      activityName.append(" Lunch")
-    elif singleActivity == 4:
-      activityName.append(" Showering")
-    elif singleActivity == 5:
-      activityName.append(" Sleeping")
-    elif singleActivity == 6:
-      activityName.append(" Snack")
-    elif singleActivity == 7:
-      activityName.append(" Spare_Time/TV")
-    elif singleActivity == 8:
-      activityName.append(" Toileting")
+      infereceAWriter.writerow(['Breakfast', 'Grooming', 'Leaving', "Lunch", "Showering", "Sleeping", "Snack", "Spare_Time/TV", "Toileting"])
+      infereceAWriter.writerow([lastActivityDistribution[0], lastActivityDistribution[1], lastActivityDistribution[2], lastActivityDistribution[3], 
+                                lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
+                                lastActivityDistribution[8]])
+
+    activity = list(modelA.predict(np.array([actionObservedList]).T))
+    for singleActivity in activity:
+      if singleActivity == 0:
+        activityName.append("Breakfast -> ")
+      elif singleActivity == 1:
+        activityName.append("Grooming -> ")
+      elif singleActivity == 2:
+        activityName.append("Leaving -> ")
+      elif singleActivity == 3:
+        activityName.append("Lunch -> ")
+      elif singleActivity == 4:
+        activityName.append("Showering -> ")
+      elif singleActivity == 5:
+        activityName.append("Sleeping -> ")
+      elif singleActivity == 6:
+        activityName.append("Snack -> ")
+      elif singleActivity == 7:
+        activityName.append("Spare_Time/TV -> ")
+      elif singleActivity == 8:
+        activityName.append("Toileting -> ")
+      else:
+        print("This is a problem...")
+      
+    print("ACTIVITY NAME: ", activityName)
+
+
+
+################### RETRIVE ACTION FROM HOME B ###################
+@app.callback(Output('result_B', 'children'),
+              [Input('BasinPIRBathroom_B', 'n_clicks_timestamp'), Input('BedPressureBedroom_B', 'n_clicks_timestamp'), Input('CabinetMagneticBathroom_B', 'n_clicks_timestamp'), 
+               Input('CooktopPIRKitchen_B', 'n_clicks_timestamp'), Input('CupboardMagneticKitchen_B', 'n_clicks_timestamp'), Input('FridgeMagneticKitchen_B', 'n_clicks_timestamp'), 
+               Input('MaindoorMagneticEntrance_B', 'n_clicks_timestamp'), Input('MicrowaveElectricKitchen_B', 'n_clicks_timestamp'), Input('SeatPressureLiving_B', 'n_clicks_timestamp'),
+               Input('ShowerPIRBathroom_B', 'n_clicks_timestamp'), Input('ToasterElectricKitchen_B', 'n_clicks_timestamp'), Input('ToiletFlushBathroom_B', 'n_clicks_timestamp')])
+
+def displayClick(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act10, act11):
+    if sum(list((int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11)))) > 0:
+      lastClicked = max(int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11))
+      action = -1
+      if int(act0) == lastClicked:
+        print("ACTION 0")
+        action = 0
+      elif int(act1) == lastClicked:
+        print("ACTION 1")
+        action = 1
+      elif int(act2) == lastClicked:
+        print("ACTION 2")
+        action = 2
+      elif int(act3) == lastClicked:
+        print("ACTION 3")
+        action = 3
+      elif int(act4) == lastClicked:
+        print("ACTION 4")
+        action = 4
+      elif int(act5) == lastClicked:
+        print("ACTION 5")
+        action = 5
+      elif int(act6) == lastClicked:
+        print("ACTION 6")
+        action = 6
+      elif int(act7) == lastClicked:
+        print("ACTION 7")
+        action = 7
+      elif int(act8) == lastClicked:
+        print("ACTION 8")
+        action = 8
+      elif int(act9) == lastClicked:
+        print("ACTION 9")
+        action = 9
+      elif int(act10) == lastClicked:
+        print("ACTION 10")
+        action = 10
+      elif int(act11) == lastClicked:
+        print("ACTION 11")
+        action = 11
+
+      if action == -1:
+        print("This is a problem...")
+      else:
+        actionObservedList.append(action)
+      
+      print("ACTION OBSERVED: ", actionObservedList)
+      print("INFERENCE: ", modelB.predict(np.array([actionObservedList]).T))
+      translateNumberToActivity(actionObservedList, 'B')
+      print("")
+
+    if len(activityName) == 0:
+      return html.Div([
+          html.Div(activityName)   
+      ])
     else:
-      print("This is a problem...")
-    
-  print("ACTIVITY NAME: ", activityName)
+      return html.Div([
+          html.H2("Activity"),
+          html.H4(activityName)
+
+      ])
 
 
 
