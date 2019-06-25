@@ -32,59 +32,37 @@ app.layout = html.Div([
 
       html.Div([
 
-        # Basin Pir Bathroom
-      html.Button(id='BasinPIRBathroom', children=[html.Img(src='https://img.icons8.com/color/96/000000/xbox-x.png')], name = 'BPB', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':'10px', 'left': '0px', 'border': 'none'}),    
+      # Basin Pir Bathroom
+      html.Button(id='BasinPIRBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'BPB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':200, 'left': 740, 'border': 'none'}),    
       
       # Bed Pressure Bedroom
       html.Button(id='BedPressureBedroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'BePBe', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':40, 'left':0, 'border': 'none'}), 
+        style = {'position':'relative', 'top':100, 'left':490, 'border': 'none'}),
 
       # Cabinet Magnetic Bathroom
       html.Button(id='CabinetMagneticBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CMB', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':70, 'left':0, 'border': 'none'}),  
+        style = {'position':'relative', 'top':260, 'left':630, 'border': 'none'}),   
 
       # Cooktop PIR Kitchen
       html.Button(id='CooktopPIRKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CPK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':100, 'left':0, 'border': 'none'}), 
-
+        style = {'position':'relative', 'top':167, 'left':15, 'border': 'none'}), 
+      
       # Cupboard Magnetic Kitchen
       html.Button(id='CupboardMagneticKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'CMK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':130, 'left':0, 'border': 'none'}), 
+        style = {'position':'relative', 'top':280, 'left':-80, 'border': 'none'}), 
 
-      # Fridge Magnetic Kitchen  
-      html.Button(id='FridgeMagneticKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'FMC', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':160, 'left':0, 'border': 'none'}),
+      # Fridge Magnetic Kitchen
+      html.Button(id='FridgeMagneticKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'FMK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':35, 'left':-75, 'border': 'none'}), 
 
       # Maindoor Magnetic Entrance
       html.Button(id='MaindoorMagneticEntrance', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'MME', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':190, 'left':0, 'border': 'none'}), 
+        style = {'position':'relative', 'top':430, 'left':-550, 'border': 'none'}), 
 
-      # Microwave Electric Kitchen
+      # Microwave Electric Kitchen 50
       html.Button(id='MicrowaveElectricKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'MEK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':220, 'left':0, 'border': 'none'}), 
-
-      #Seat Pressure Living (before: 'top':130, 'left':340)      
-      html.Button(id='SeatPressureLiving', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPL', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':250, 'left':0, 'border': 'none'}),
-
-      # Shower PIR Bathroom
-      html.Button(id='ShowerPIRBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPB', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':270, 'left':0, 'border': 'none'}), 
-
-      # Toaster Electric Kitchen
-      html.Button(id='ToasterElectricKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TEK', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':300, 'left':0, 'border': 'none'}), 
-
-      # Toilet Flush Bathroom
-      html.Button(id='ToiletFlushBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TFB', n_clicks_timestamp=0,
-        style = {'position':'relative', 'top':330, 'left':0, 'border': 'none'}), 
-
-
-
-
-
-
+        style = {'position':'relative', 'top':50, 'left':-427, 'border': 'none'}), 
 
 
 
@@ -102,8 +80,8 @@ app.layout = html.Div([
 ])
 #'background-position': 'center'
 #testing button callbacks, senza n_clicks lo esegue anche senza cliccare
-@app.callback(Output('result', 'children'),
-              [Input('SeatPressureLiving', 'n_clicks_timestamp'), Input('FridgeMagneticKitchen', 'n_clicks_timestamp')])
+# @app.callback(Output('result', 'children'),
+#              [Input('SeatPressureLiving', 'n_clicks_timestamp'), Input('FridgeMagneticKitchen', 'n_clicks_timestamp')])
 
 def displayClick(n_clicks1, n_clicks2):
     print("CLICK SEAT: ", n_clicks1)
@@ -140,3 +118,36 @@ if __name__ == '__main__':
 #  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
 #  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
 #  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom'] 
+
+
+'''
+
+
+
+
+
+      
+
+      # Fridge Magnetic Kitchen  
+
+
+
+
+
+
+      #Seat Pressure Living (before: 'top':130, 'left':340)      
+      html.Button(id='SeatPressureLiving', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPL', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':250, 'left':0, 'border': 'none'}),
+
+      # Shower PIR Bathroom
+      html.Button(id='ShowerPIRBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'SPB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':270, 'left':0, 'border': 'none'}), 
+
+      # Toaster Electric Kitchen
+      html.Button(id='ToasterElectricKitchen', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TEK', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':300, 'left':0, 'border': 'none'}), 
+
+      # Toilet Flush Bathroom
+      html.Button(id='ToiletFlushBathroom', children=[html.Img(src='https://img.icons8.com/color/48/000000/xbox-x.png')], name = 'TFB', n_clicks_timestamp=0,
+        style = {'position':'relative', 'top':330, 'left':0, 'border': 'none'}), 
+'''
