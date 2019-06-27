@@ -100,25 +100,46 @@ app.layout = html.Div([
      html.Div(id='result', style={
         'textAlign': 'center'}),
 
+
+    html.Div([
+    html.Button('Basin', id='BPB_V', n_clicks_timestamp=0),
+    html.Button('Bed', id='BePBe_V', n_clicks_timestamp=0),
+    html.Button('Cabinet', id='CMB_V', n_clicks_timestamp=0),
+    html.Button('Cooktop', id='CPK_V', n_clicks_timestamp=0),
+    html.Button('Cupboard', id='CMK_V', n_clicks_timestamp=0),
+    html.Button('Fridge', id='FMK_V', n_clicks_timestamp=0),
+    html.Button('Maindoor', id='MME_V', n_clicks_timestamp=0),
+    html.Button('Microwave', id='MEK_V', n_clicks_timestamp=0),
+    html.Button('Sofa', id='SPL_V', n_clicks_timestamp=0),
+    html.Button('Shower', id='SPB_V', n_clicks_timestamp=0),
+    html.Button('Toaster', id='TEK_V', n_clicks_timestamp=0),
+    html.Button('Toilet', id='TFB_V', n_clicks_timestamp=0),
+    
+    html.Div(id='container-button-timestamp')
+    ], style={
+        'position':'relative', 'left':275}),
+    html.Button('Start', id='viterbi', n_clicks_timestamp=0, style={'margin-right':'auto','margin-left':'auto'}),
+
     html.Div([
       dcc.Dropdown(
-    options=[
-        {'label': 'Basin PIR Bathroom', 'value': '0'},
-        {'label': 'Bed Pressure Bedroom', 'value': '1'},
-        {'label': 'Cabinet Magnetic Bathroom', 'value': '2'}, 
-        {'label': 'Cooktop PIR Kitchen', 'value': '3'},
-        {'label': 'Cupboard Magnetic Kitchen', 'value': '4'},
-        {'label': 'Fridge Magnetic Kitchen', 'value': '5'}, 
-        {'label': 'Maindoor Magnetic Entrance', 'value': '6'},
-        {'label': 'Microwave Electric Kitchen', 'value': '7'},
-        {'label': 'Seat Pressure Living', 'value': '8'}, 
-        {'label': 'Shower PIR Bathroom', 'value': '9'},
-        {'label': 'ToasterE lectric Kitchen', 'value': '10'},
-        {'label': 'Toilet Flush Bathroom', 'value': '11'}, 
-    ],
-    value=[],
-    multi=True
-)  
+        id='opt-dropdown',
+        options=[
+            {'label': 'Basin PIR Bathroom', 'value': '0'},
+            {'label': 'Bed Pressure Bedroom', 'value': '1'},
+            {'label': 'Cabinet Magnetic Bathroom', 'value': '2'}, 
+            {'label': 'Cooktop PIR Kitchen', 'value': '3'},
+            {'label': 'Cupboard Magnetic Kitchen', 'value': '4'},
+            {'label': 'Fridge Magnetic Kitchen', 'value': '5'}, 
+            {'label': 'Maindoor Magnetic Entrance', 'value': '6'},
+            {'label': 'Microwave Electric Kitchen', 'value': '7'},
+            {'label': 'Seat Pressure Living', 'value': '8'}, 
+            {'label': 'Shower PIR Bathroom', 'value': '9'},
+            {'label': 'ToasterE lectric Kitchen', 'value': '10'},
+            {'label': 'Toilet Flush Bathroom', 'value': '11'}, 
+        ],
+        value=[],
+        multi=True
+    )  
     ]),
       
        
@@ -551,7 +572,25 @@ def displayClick2(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
 
       ]) 
 
-
+@app.callback(Output('container-button-timestamp', 'children'),
+              [Input('BPB_V', 'n_clicks_timestamp'),
+               Input('BePBe_V', 'n_clicks_timestamp'),
+               Input('CMB_V', 'n_clicks_timestamp')])
+def displayClick(btn1, btn2, btn3):
+    if int(btn1) > int(btn2) and int(btn1) > int(btn3):
+        msg = 'Button 1 was most recently clicked'
+    elif int(btn2) > int(btn1) and int(btn2) > int(btn3):
+        msg = 'Button 2 was most recently clicked'
+    elif int(btn3) > int(btn1) and int(btn3) > int(btn2):
+        msg = 'Button 3 was most recently clicked'
+    else:
+        msg = 'None of the buttons have been clicked yet'
+    return html.Div([
+        html.Div('btn1: {}'.format(btn1)),
+        html.Div('btn2: {}'.format(btn2)),
+        html.Div('btn3: {}'.format(btn3)),
+        html.Div(msg)
+    ])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
