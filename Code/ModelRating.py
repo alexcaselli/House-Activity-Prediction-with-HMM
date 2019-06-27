@@ -37,9 +37,9 @@ def getCorrectActivitySequence(home, stage):
     if (stage == 'test'):
         #test samples
         lim = floor(len(activity)*0.7)
-        print("{:<33}{:>4}".format("LIM VALUE FROM CORRECT ACTIVITY: ", len(activity)- 1 - lim+1))
+        print("{:<33}{:>4}".format("LIM VALUE FROM CORRECT ACTIVITY: ", len(activity) - lim))
         print("")
-        return np.array([activity[lim+1:len(activity)-1]])
+        return np.array([activity[lim:len(activity)]])
     else:
         return np.array([activity])
 
@@ -80,7 +80,7 @@ def getAction(home, stage):
         #test samples
         lim = floor(len(actionSequence)*0.7)
         print("{:<33}{:>4}".format("LIM VALUE FROM CORRECT ACTION: ", len(actionSequence)- 1 - lim+1))
-        return np.array([actionSequence[lim+1:len(actionSequence)-1]])
+        return np.array([actionSequence[lim:len(actionSequence)]])
     else:
         return np.array([actionSequence])
 
@@ -151,7 +151,7 @@ def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivi
         postery.append(decision[0])
         confusionMatrix[correctActivity[0][activity]][decision[0]] += 1
 
-    # plotConfusionMatrix(correctActivity[0], postery, targetActivityName, False, "Confusion Matrix")
+    # plotConfusionMatrix(correctActivity[0], postery, targetActivityName, True, "Confusion Matrix")
 
     print("CONFUSION MATRIX")
     print(confusionMatrix)

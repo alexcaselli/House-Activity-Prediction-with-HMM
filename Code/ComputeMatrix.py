@@ -52,7 +52,7 @@ def calculateT(csv_file, test):
 			# print('first')
 			prev = activity
 		else:	
-			T[my_dict[prev], my_dict[activity]] +=1
+			T[my_dict[prev], my_dict[activity]] += 1
 			times[0, my_dict[prev]] += 1
 			prev = activity
 	# print(sor)
@@ -165,6 +165,7 @@ def calculateO(csv_file, test):
 	for i in range(0, lim):
 		O[my_dict[activity_column[i]], my_dict_oss[oss[i]]] +=1
 		times[0, my_dict[activity_column[i]]] += 1 
+
 		
 	# print(sor)
 	# print(O)
