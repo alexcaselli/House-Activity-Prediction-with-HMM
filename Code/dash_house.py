@@ -14,6 +14,7 @@ import csv
 
 
 
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -23,6 +24,7 @@ actionObservedList = list()
 activityName = list()
 with open("./Model/HouseA.pkl", "rb") as fileA: 
    modelA = pickle.load(fileA)
+
 
 with open("./Model/HouseB.pkl", "rb") as fileB: 
    modelB = pickle.load(fileB)
@@ -36,8 +38,8 @@ app.layout = html.Div([
 ################### ADD BUTTON FOR HOME A ###################
   dcc.Tabs(id="tabs", children=[
 
-    dcc.Tab(label='Casa A', children=[
-      html.H3('Casa A', style={
+    dcc.Tab(label='House A', children=[
+      html.H3('House A', style={
         'textAlign': 'center'}),
      
       html.Div([
@@ -97,17 +99,45 @@ app.layout = html.Div([
       ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
      html.Div(id='result', style={
         'textAlign': 'center'}),
+
+    html.Div([
+      dcc.Dropdown(
+    options=[
+        {'label': 'Basin PIR Bathroom', 'value': '0'},
+        {'label': 'Bed Pressure Bedroom', 'value': '1'},
+        {'label': 'Cabinet Magnetic Bathroom', 'value': '2'}, 
+        {'label': 'Cooktop PIR Kitchen', 'value': '3'},
+        {'label': 'Cupboard Magnetic Kitchen', 'value': '4'},
+        {'label': 'Fridge Magnetic Kitchen', 'value': '5'}, 
+        {'label': 'Maindoor Magnetic Entrance', 'value': '6'},
+        {'label': 'Microwave Electric Kitchen', 'value': '7'},
+        {'label': 'Seat Pressure Living', 'value': '8'}, 
+        {'label': 'Shower PIR Bathroom', 'value': '9'},
+        {'label': 'ToasterE lectric Kitchen', 'value': '10'},
+        {'label': 'Toilet Flush Bathroom', 'value': '11'}, 
+    ],
+    value=[],
+    multi=True
+)  
+    ]),
+      
        
     ]),
 
+# [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
+#  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
 
+# ['0: BasinPIRBathroom', 1: 'BedPressureBedroom', 2: 'CabinetMagneticBathroom', 
+#  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
+#  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
+#  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom'] 
 
 
 
     ################### ADD BUTTON FOR HOME B ###################
-    dcc.Tab(label='CasaB', children=[
+    dcc.Tab(label='House B', children=[
 
-    html.H3('Casa B', style={
+    html.H3('House B', style={
         'textAlign': 'center'}),
      
 # 0: 'BasinPIRBathroom_B', 1:'BedPressureBedroom_B', 2:'CupboardMagneticKitchen_B', '3: DoorPIRBedroom_B', 4: 'DoorPIRKitchen_B', 5: 'DoorPIRLiving_B', 6: 'FridgeMagneticKitchen_B',
@@ -249,9 +279,57 @@ def displayClick(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act
           html.Div(activityName)   
       ])
     else:
+      distribution_A = pd.read_csv('./Data/InferenceHomeA.csv')
+      top3Activity = dict()
+      index = 0
+      activityTake = list()
+
+      while index < 3:
+        maxValue = 0
+        maxActivity = ""
+        for activityDistribution in distribution_A:
+          if distribution_A[activityDistribution][0] > maxValue:
+            if distribution_A[activityDistribution].name not in activityTake:
+              maxValue = distribution_A[activityDistribution][0]
+              maxActivity = distribution_A[activityDistribution].name
+        print(maxValue)
+        print(maxActivity)
+        activityTake.append(maxActivity)
+        top3Activity[maxActivity] = maxValue
+        index += 1
+      
+      print(activityTake)
+      print(top3Activity)
+      print("")
+
+      with open('./Data/MAXInferenceHomeA.csv', mode='w') as infereceA:
+        infereceAWriter = csv.writer(infereceA, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+      
+
+        infereceAWriter.writerow(['A0', 'A1', 'A2'])
+        infereceAWriter.writerow([top3Activity[activityTake[0]], top3Activity[activityTake[1]], top3Activity[activityTake[2]]])
+
+      distribution_A = pd.read_csv('./Data/MAXInferenceHomeA.csv')
+      
       return html.Div([
           html.H2("Activity"),
           html.H4(activityName)
+      ]), html.Div([
+            dcc.Graph(
+            id='LastActivityDistribution',
+                    figure={
+                        'data': [
+                            {'x': str(activityTake[0]), 'y': distribution_A.A0,
+                                'type': 'bar', 'name': str(activityTake[0])},
+                            {'x': str(activityTake[1]), 'y': distribution_A.A1,
+                                'type': 'bar', 'name': str(activityTake[1])},
+                            {'x': str(activityTake[2]), 'y': distribution_A.A2,
+                                'type': 'bar', 'name': str(activityTake[2])},],
+                        'layout': {
+                    'title': 'Last Activity Distribution'
+                        }
+                    }
+                ),
 
       ])
 
@@ -272,13 +350,20 @@ def translateNumberToActivity(actionObservedList, house):
       infereceAWriter = csv.writer(infereceA, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
       
 
-      infereceAWriter.writerow(['Breakfast', 'Grooming', 'Leaving', "Lunch", "Showering", "Sleeping", "Snack", "Spare_Time/TV", "Toileting"])
+      infereceAWriter.writerow(['Breakfast', 'Grooming', 'Leaving', "Lunch", "Showering", "Sleeping", "Snack", "Spare_Time_TV", "Toileting"])
       infereceAWriter.writerow([lastActivityDistribution[0], lastActivityDistribution[1], lastActivityDistribution[2], lastActivityDistribution[3], 
                                 lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
                                 lastActivityDistribution[8]])
 
-    activity = list(modelA.predict(np.array([actionObservedList]).T))
-    for singleActivity in activity:
+    # activity = np.where(lastActivityDistribution == np.amax(lastActivityDistribution))
+    # activity = list(modelA.predict(np.array([actionObservedList]).T))
+    activity = list(modelA.predict_proba(np.array([actionObservedList]).T))
+    # print(activity)
+    # print("DIOCANE: ", activity[-1])
+    # print("MADONNA TROIA: ", type(lastActivityDistribution))
+    for distribution in activity:
+      singleActivity = np.where(distribution == np.amax(distribution))
+      singleActivity = singleActivity[0]
       if singleActivity == 0:
         activityName.append("Breakfast -> ")
       elif singleActivity == 1:
@@ -294,7 +379,7 @@ def translateNumberToActivity(actionObservedList, house):
       elif singleActivity == 6:
         activityName.append("Snack -> ")
       elif singleActivity == 7:
-        activityName.append("Spare_Time/TV -> ")
+        activityName.append("Spare Time/TV -> ")
       elif singleActivity == 8:
         activityName.append("Toileting -> ")
       else:
@@ -315,9 +400,12 @@ def translateNumberToActivity(actionObservedList, house):
                                 lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
                                 lastActivityDistribution[8], lastActivityDistribution[9]])
 
-    activity_B = list(modelB.predict(np.array([actionObservedList]).T))
-    for singleActivity in activity_B:
-      print('Ho trovato:' + str(singleActivity))
+    # activity_B = list(modelB.predict(np.array([actionObservedList]).T))
+    activity_B = list(modelB.predict_proba(np.array([actionObservedList]).T))
+    for distribution in activity_B:
+      singleActivity = np.where(distribution == np.amax(distribution))
+      singleActivity = singleActivity[0]
+      # print('Ho trovato:' + str(singleActivity))
       if singleActivity == 0:
         activityName_B.append("Breakfast -> ")
       elif singleActivity == 1:
@@ -335,7 +423,7 @@ def translateNumberToActivity(actionObservedList, house):
       elif singleActivity == 7:
         activityName_B.append("Snack -> ")
       elif singleActivity == 8:
-        activityName_B.append("Spare_Time/TV -> ")
+        activityName_B.append("Spare Time/TV -> ")
       elif singleActivity == 9:
         activityName_B.append("Toileting -> ")
       else:
@@ -408,11 +496,60 @@ def displayClick2(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
           html.Div(activityName_B)   
       ])
     else:
+      distribution_B = pd.read_csv('./Data/InferenceHomeB.csv')
+      top3Activity = dict()
+      index = 0
+      activityTake = list()
+
+      while index < 3:
+        maxValue = 0
+        maxActivity = ""
+        for activityDistribution in distribution_B:
+          if distribution_B[activityDistribution][0] > maxValue:
+            if distribution_B[activityDistribution].name not in activityTake:
+              maxValue = distribution_B[activityDistribution][0]
+              maxActivity = distribution_B[activityDistribution].name
+        print(maxValue)
+        print(maxActivity)
+        activityTake.append(maxActivity)
+        top3Activity[maxActivity] = maxValue
+        index += 1
+      
+      print(activityTake)
+      print(top3Activity)
+      print("")
+
+      with open('./Data/MAXInferenceHomeB.csv', mode='w') as infereceA:
+        infereceAWriter = csv.writer(infereceA, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+      
+
+        infereceAWriter.writerow(['A0', 'A1', 'A2'])
+        infereceAWriter.writerow([top3Activity[activityTake[0]], top3Activity[activityTake[1]], top3Activity[activityTake[2]]])
+
+      distribution_B = pd.read_csv('./Data/MAXInferenceHomeB.csv')
+
       return html.Div([
           html.H2("Activity"),
           html.H4(activityName_B)
 
-      ])
+      ]), html.Div([
+            dcc.Graph(
+            id='LastActivityDistribution',
+                    figure={
+                        'data': [
+                            {'x': str(activityTake[0]), 'y': distribution_B.A0,
+                                'type': 'bar', 'name': str(activityTake[0])},
+                            {'x': str(activityTake[1]), 'y': distribution_B.A1,
+                                'type': 'bar', 'name': str(activityTake[1])},
+                            {'x': str(activityTake[2]), 'y': distribution_B.A2,
+                                'type': 'bar', 'name': str(activityTake[2])},],
+                        'layout': {
+                    'title': 'Last Activity Distribution'
+                        }
+                    }
+                ),
+
+      ]) 
 
 
 

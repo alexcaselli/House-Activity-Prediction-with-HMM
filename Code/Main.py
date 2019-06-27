@@ -116,13 +116,16 @@ with open("./Model/HouseB.pkl", "rb") as fileB:
 
 
 
-################################ MODEL RATING ################################
-print("-.-.-.-.-.-.-.-MODEL A RATING-.-.-.-.-.-.-.-")
-modelRating(modelA, actionObservedA, correctActivityA, len(transictionMatrixA), targetActivityNameA)
-print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
+################################ LOAD MODEL RATING ################################
 print("")
-print("-.-.-.-.-.-.-.-MODEL B RATING-.-.-.-.-.-.-.-")
+print("=.=.=.=.=.=.=.=LOAD MODEL RATING=.=.=.=.=.=.=.=")
+print("")
+print("=.=.=.=.=.=.=.=MODEL A RATING=.=.=.=.=.=.=.=")
+modelRating(modelA, actionObservedA, correctActivityA, len(transictionMatrixA), targetActivityNameA)
+print("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=")
+print("")
+print("=.=.=.=.=.=.=.=MODEL B RATING=.=.=.=.=.=.=.=")
 modelRating(modelB, actionObservedB, correctActivityB, len(transictionMatrixB), targetActivityNameB)
-print("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
+print("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.= ")
 print(" ")
 
