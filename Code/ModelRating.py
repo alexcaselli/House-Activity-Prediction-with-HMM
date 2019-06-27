@@ -133,32 +133,35 @@ def printInformation(initialPro, transictionMatrix, observationsMatrix, actionOb
 
 def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivityName):
 
-    posteriors = model.predict(actionObserved.T)
+    posteriors = model.predict_proba(actionObserved.T)
     # print("ACTIVITY FROM OBSERVATION VALUE: ", posteriors)
+    postery = list()
 
     confusionMatrix = np.zeros((matrixSize, matrixSize))
 
-    # plotConfusionMatrix(correctActivity[0], posteriors, targetActivityName, False, "Confusion Matrix")
-
     cont = 0
     for activity in range(0, len(correctActivity[0])):
-        if posteriors[activity] != correctActivity[0][activity]:
+        decision = np.where(posteriors[activity] == np.amax(posteriors[activity]))
+        if decision[0] != correctActivity[0][activity]:
             # print(activity)
             # print(posteriors[activity])
             # print(correctActivity[0][activity])
             cont += 1
             # print("")
-        confusionMatrix[correctActivity[0][activity]][posteriors[activity]] += 1
+        postery.append(decision[0])
+        confusionMatrix[correctActivity[0][activity]][decision[0]] += 1
+
+    # plotConfusionMatrix(correctActivity[0], postery, targetActivityName, False, "Confusion Matrix")
 
     print("CONFUSION MATRIX")
     print(confusionMatrix)
     print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
 
 
-    print(classification_report(correctActivity[0], posteriors, target_names=targetActivityName))
+    print(classification_report(correctActivity[0], postery, target_names=targetActivityName))
     print("")
     print("ACCURACY SCORE:", end = " ")
-    print(accuracy_score(correctActivity[0], posteriors))
+    print(accuracy_score(correctActivity[0], postery))
 
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
