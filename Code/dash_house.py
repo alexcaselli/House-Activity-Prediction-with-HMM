@@ -25,6 +25,10 @@ activityName = list()
 with open("./Model/HouseA.pkl", "rb") as fileA: 
    modelA = pickle.load(fileA)
 
+###########VITERBI##########
+actionObservedListViterbi = list()
+activityNameViterbi = list()
+
 
 with open("./Model/HouseB.pkl", "rb") as fileB: 
    modelB = pickle.load(fileB)
@@ -99,8 +103,10 @@ app.layout = html.Div([
       ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
      html.Div(id='result', style={
         'textAlign': 'center'}),
-
-
+      
+    html.Hr(),
+    html.Div([], style={'height':30}),
+    html.H2('Viterbi Algorithm', style={'text-align':'center'}),
     html.Div([
     html.Button('Basin', id='BPB_V', n_clicks_timestamp=0),
     html.Button('Bed', id='BePBe_V', n_clicks_timestamp=0),
@@ -115,32 +121,13 @@ app.layout = html.Div([
     html.Button('Toaster', id='TEK_V', n_clicks_timestamp=0),
     html.Button('Toilet', id='TFB_V', n_clicks_timestamp=0),
     
-    html.Div(id='container-button-timestamp')
-    ], style={
-        'position':'relative', 'left':275}),
-    html.Button('Start', id='viterbi', n_clicks_timestamp=0, style={'margin-right':'auto','margin-left':'auto'}),
+    #'position':'relative', 'left':275
+    ], style={'text-align':'center',
+        }),
+    html.Div([html.Button('Start', id='viterbi', n_clicks_timestamp=0)], style={'text-align':'center'}),
+    html.Div(id='container-button-timestamp'),
 
-    html.Div([
-      dcc.Dropdown(
-        id='opt-dropdown',
-        options=[
-            {'label': 'Basin PIR Bathroom', 'value': '0'},
-            {'label': 'Bed Pressure Bedroom', 'value': '1'},
-            {'label': 'Cabinet Magnetic Bathroom', 'value': '2'}, 
-            {'label': 'Cooktop PIR Kitchen', 'value': '3'},
-            {'label': 'Cupboard Magnetic Kitchen', 'value': '4'},
-            {'label': 'Fridge Magnetic Kitchen', 'value': '5'}, 
-            {'label': 'Maindoor Magnetic Entrance', 'value': '6'},
-            {'label': 'Microwave Electric Kitchen', 'value': '7'},
-            {'label': 'Seat Pressure Living', 'value': '8'}, 
-            {'label': 'Shower PIR Bathroom', 'value': '9'},
-            {'label': 'ToasterE lectric Kitchen', 'value': '10'},
-            {'label': 'Toilet Flush Bathroom', 'value': '11'}, 
-        ],
-        value=[],
-        multi=True
-    )  
-    ]),
+    
       
        
     ]),
@@ -380,8 +367,7 @@ def translateNumberToActivity(actionObservedList, house):
     # activity = list(modelA.predict(np.array([actionObservedList]).T))
     activity = list(modelA.predict_proba(np.array([actionObservedList]).T))
     # print(activity)
-    # print("DIOCANE: ", activity[-1])
-    # print("MADONNA TROIA: ", type(lastActivityDistribution))
+    
     for distribution in activity:
       singleActivity = np.where(distribution == np.amax(distribution))
       singleActivity = singleActivity[0]
@@ -575,22 +561,159 @@ def displayClick2(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
 @app.callback(Output('container-button-timestamp', 'children'),
               [Input('BPB_V', 'n_clicks_timestamp'),
                Input('BePBe_V', 'n_clicks_timestamp'),
-               Input('CMB_V', 'n_clicks_timestamp')])
-def displayClick(btn1, btn2, btn3):
-    if int(btn1) > int(btn2) and int(btn1) > int(btn3):
-        msg = 'Button 1 was most recently clicked'
-    elif int(btn2) > int(btn1) and int(btn2) > int(btn3):
-        msg = 'Button 2 was most recently clicked'
-    elif int(btn3) > int(btn1) and int(btn3) > int(btn2):
-        msg = 'Button 3 was most recently clicked'
-    else:
-        msg = 'None of the buttons have been clicked yet'
-    return html.Div([
-        html.Div('btn1: {}'.format(btn1)),
-        html.Div('btn2: {}'.format(btn2)),
-        html.Div('btn3: {}'.format(btn3)),
-        html.Div(msg)
-    ])
+               Input('CMB_V', 'n_clicks_timestamp'),
+               Input('CPK_V', 'n_clicks_timestamp'),
+               Input('CMK_V', 'n_clicks_timestamp'),
+               Input('FMK_V', 'n_clicks_timestamp'),
+               Input('MME_V', 'n_clicks_timestamp'),
+               Input('MEK_V', 'n_clicks_timestamp'),
+               Input('SPL_V', 'n_clicks_timestamp'),
+               Input('SPB_V', 'n_clicks_timestamp'),
+               Input('TEK_V', 'n_clicks_timestamp'),
+               Input('TFB_V', 'n_clicks_timestamp'),
+               Input('viterbi', 'n_clicks_timestamp'),
+               ])
+def displayclick3(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act10, act11, vit):
+    if sum(list((int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11)))) > 0:
+      lastClicked = max(int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11), int(vit))
+      action = -1
+      if int(act0) == lastClicked:
+        print("ACTION 0")
+        action = 0
+      elif int(act1) == lastClicked:
+        print("ACTION 1")
+        action = 1
+      elif int(act2) == lastClicked:
+        print("ACTION 2")
+        action = 2
+      elif int(act3) == lastClicked:
+        print("ACTION 3")
+        action = 3
+      elif int(act4) == lastClicked:
+        print("ACTION 4")
+        action = 4
+      elif int(act5) == lastClicked:
+        print("ACTION 5")
+        action = 5
+      elif int(act6) == lastClicked:
+        print("ACTION 6")
+        action = 6
+      elif int(act7) == lastClicked:
+        print("ACTION 7")
+        action = 7
+      elif int(act8) == lastClicked:
+        print("ACTION 8")
+        action = 8
+      elif int(act9) == lastClicked:
+        print("ACTION 9")
+        action = 9
+      elif int(act10) == lastClicked:
+        print("ACTION 10")
+        action = 10
+      elif int(act11) == lastClicked:
+        print("ACTION 11")
+        action = 11
+      elif int(vit) == lastClicked:
+        action = 12
+        print("ACTION OBSERVED: ", actionObservedListViterbi)
+        logp, seq = modelA.decode(np.array([actionObservedListViterbi]).T, algorithm='viterbi')
+        print("INFERENCE of viterbi: ", seq)
+        translateNumberToActivity_simple(seq, 'A')
+        print("")
+        actionObservedListViterbi.clear()
+        return html.Div([
+          html.H2("Viterbi Prediction"),
+          html.H4(activityNameViterbi)
+        ], style={'text-align':'center'})
+        
+
+      if action == -1:
+        print("This is a problem...")
+      elif action != 12:
+        actionObservedListViterbi.append(action)
+
+
+def translateNumberToActivity_simple(sequence, house):
+  activity = list()
+  activity_B = list()
+  activityNameViterbi.clear()
+  #activityNameViterbi_B.clear()#######################################
+
+  if house=='A':
+    
+
+    
+    
+    for singleActivity in sequence:
+      
+      if singleActivity == 0:
+        activityNameViterbi.append("Breakfast -> ")
+      elif singleActivity == 1:
+        activityNameViterbi.append("Grooming -> ")
+      elif singleActivity == 2:
+        activityNameViterbi.append("Leaving -> ")
+      elif singleActivity == 3:
+        activityNameViterbi.append("Lunch -> ")
+      elif singleActivity == 4:
+        activityNameViterbi.append("Showering -> ")
+      elif singleActivity == 5:
+        activityNameViterbi.append("Sleeping -> ")
+      elif singleActivity == 6:
+        activityNameViterbi.append("Snack -> ")
+      elif singleActivity == 7:
+        activityNameViterbi.append("Spare Time/TV -> ")
+      elif singleActivity == 8:
+        activityNameViterbi.append("Toileting -> ")
+      else:
+        print("This is a problem...")
+      
+    print("ACTIVITY NAME: ", activityNameViterbi)
+  #--------------------CASA B----------------------------
+  ################################################################
+  else:
+    lastActivityDistribution = list(modelB.predict_proba(np.array([actionObservedList]).T))[-1]
+
+    with open('./Data/InferenceHomeB.csv', mode='w') as infereceB:
+      infereceBWriter = csv.writer(infereceB, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+      
+
+      infereceBWriter.writerow(['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting'])
+      infereceBWriter.writerow([lastActivityDistribution[0], lastActivityDistribution[1], lastActivityDistribution[2], lastActivityDistribution[3], 
+                                lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
+                                lastActivityDistribution[8], lastActivityDistribution[9]])
+
+    # activity_B = list(modelB.predict(np.array([actionObservedList]).T))
+    activity_B = list(modelB.predict_proba(np.array([actionObservedList]).T))
+    for distribution in activity_B:
+      singleActivity = np.where(distribution == np.amax(distribution))
+      singleActivity = singleActivity[0]
+      # print('Ho trovato:' + str(singleActivity))
+      if singleActivity == 0:
+        activityName_B.append("Breakfast -> ")
+      elif singleActivity == 1:
+        activityName_B.append("Dinner -> ")
+      elif singleActivity == 2:
+        activityName_B.append("Grooming -> ")
+      elif singleActivity == 3:
+        activityName_B.append("Leaving -> ")
+      elif singleActivity == 4:
+        activityName_B.append("Lunch -> ")
+      elif singleActivity == 5:
+        activityName_B.append("Showering -> ")
+      elif singleActivity == 6:
+        activityName_B.append("Sleeping -> ")
+      elif singleActivity == 7:
+        activityName_B.append("Snack -> ")
+      elif singleActivity == 8:
+        activityName_B.append("Spare Time/TV -> ")
+      elif singleActivity == 9:
+        activityName_B.append("Toileting -> ")
+      else:
+        print("This is a problem...")
+      
+    print("ACTIVITY NAME: ", activityName_B)
+      
+    
 
 if __name__ == '__main__':
     app.run_server(debug=True)
