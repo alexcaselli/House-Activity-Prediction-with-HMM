@@ -35,6 +35,10 @@ with open("./Model/HouseB.pkl", "rb") as fileB:
 actionObservedList_B = list()
 activityName_B = list()
 
+###########VITERBI##########
+actionObservedListViterbi_B = list()
+activityNameViterbi_B = list()
+
 
 app.layout = html.Div([
   html.H1('Mother Sensor', style={
@@ -43,7 +47,7 @@ app.layout = html.Div([
   dcc.Tabs(id="tabs", children=[
 
     dcc.Tab(label='House A', children=[
-      html.H3('House A', style={
+      html.H2('House A', style={
         'textAlign': 'center'}),
      
       html.Div([
@@ -145,7 +149,7 @@ app.layout = html.Div([
     ################### ADD BUTTON FOR HOME B ###################
     dcc.Tab(label='House B', children=[
 
-    html.H3('House B', style={
+    html.H2('House B', style={
         'textAlign': 'center'}),
      
 # 0: 'BasinPIRBathroom_B', 1:'BedPressureBedroom_B', 2:'CupboardMagneticKitchen_B', '3: DoorPIRBedroom_B', 4: 'DoorPIRKitchen_B', 5: 'DoorPIRLiving_B', 6: 'FridgeMagneticKitchen_B',
@@ -211,6 +215,29 @@ app.layout = html.Div([
       ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
      html.Div(id='result_B', style={
         'textAlign': 'center'}),
+
+        html.Hr(),
+    html.Div([], style={'height':30}),
+    html.H2('Viterbi Algorithm', style={'text-align':'center'}),
+    html.Div([
+    html.Button('Basin', id='BPB_VB', n_clicks_timestamp=0),
+    html.Button('Bed', id='BePBe_VB', n_clicks_timestamp=0),
+    html.Button('Cupboard', id='CMK_VB', n_clicks_timestamp=0),
+    html.Button('BedroomDoor', id='DPB_VB', n_clicks_timestamp=0),
+    html.Button('KitchenDoor', id='DPK_VB', n_clicks_timestamp=0),
+    html.Button('LivingDoor', id='DPL_VB', n_clicks_timestamp=0),
+    html.Button('Fridge', id='FMK_VB', n_clicks_timestamp=0),
+    html.Button('Maindoor', id='MME_VB', n_clicks_timestamp=0),
+    html.Button('Microwave', id='MEK_VB', n_clicks_timestamp=0),
+    html.Button('Sofa', id='SPL_VB', n_clicks_timestamp=0),
+    html.Button('Shower', id='SPB_VB', n_clicks_timestamp=0),
+    html.Button('Toilet', id='TFB_VB', n_clicks_timestamp=0),
+    
+    #'position':'relative', 'left':275
+    ], style={'text-align':'center',
+        }),
+    html.Div([html.Button('Start', id='viterbi_B', n_clicks_timestamp=0)], style={'text-align':'center'}),
+    html.Div(id='viterbi_result'),
     ]),
 
   ]),
@@ -632,12 +659,86 @@ def displayclick3(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
       elif action != 12:
         actionObservedListViterbi.append(action)
 
+@app.callback(Output('viterbi_result', 'children'),
+              [Input('BPB_VB', 'n_clicks_timestamp'),
+               Input('BePBe_VB', 'n_clicks_timestamp'),
+               Input('CMK_VB', 'n_clicks_timestamp'),
+               Input('DPB_VB', 'n_clicks_timestamp'),
+               Input('DPK_VB', 'n_clicks_timestamp'),
+               Input('DPL_VB', 'n_clicks_timestamp'),
+               Input('FMK_VB', 'n_clicks_timestamp'),
+               Input('MME_VB', 'n_clicks_timestamp'),
+               Input('MEK_VB', 'n_clicks_timestamp'),
+               Input('SPL_VB', 'n_clicks_timestamp'),
+               Input('SPB_VB', 'n_clicks_timestamp'),
+               Input('TFB_VB', 'n_clicks_timestamp'),
+               Input('viterbi_B', 'n_clicks_timestamp'),
+               ])
+def displayclick4(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, act10, act11, vit):
+    if sum(list((int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11)))) > 0:
+      lastClicked = max(int(act0), int(act1), int(act2), int(act3), int(act4), int(act5), int(act6), int(act7), int(act8), int(act9), int(act10), int(act11), int(vit))
+      action = -1
+      if int(act0) == lastClicked:
+        print("ACTION 0")
+        action = 0
+      elif int(act1) == lastClicked:
+        print("ACTION 1")
+        action = 1
+      elif int(act2) == lastClicked:
+        print("ACTION 2")
+        action = 2
+      elif int(act3) == lastClicked:
+        print("ACTION 3")
+        action = 3
+      elif int(act4) == lastClicked:
+        print("ACTION 4")
+        action = 4
+      elif int(act5) == lastClicked:
+        print("ACTION 5")
+        action = 5
+      elif int(act6) == lastClicked:
+        print("ACTION 6")
+        action = 6
+      elif int(act7) == lastClicked:
+        print("ACTION 7")
+        action = 7
+      elif int(act8) == lastClicked:
+        print("ACTION 8")
+        action = 8
+      elif int(act9) == lastClicked:
+        print("ACTION 9")
+        action = 9
+      elif int(act10) == lastClicked:
+        print("ACTION 10")
+        action = 10
+      elif int(act11) == lastClicked:
+        print("ACTION 11")
+        action = 11
+      elif int(vit) == lastClicked:
+        action = 12
+        print("ACTION OBSERVED: ", actionObservedListViterbi_B)
+        logp, seq = modelB.decode(np.array([actionObservedListViterbi_B]).T, algorithm='viterbi')
+        print("INFERENCE of viterbi: ", seq)
+        translateNumberToActivity_simple(seq, 'B')
+        print("")
+        actionObservedListViterbi_B.clear()
+        return html.Div([
+          html.H2("Viterbi Prediction"),
+          html.H4(activityNameViterbi_B)
+        ], style={'text-align':'center'})
+        
+
+      if action == -1:
+        print("This is a problem...")
+      elif action != 12:
+        actionObservedListViterbi_B.append(action)
+
 
 def translateNumberToActivity_simple(sequence, house):
   activity = list()
   activity_B = list()
   activityNameViterbi.clear()
-  #activityNameViterbi_B.clear()#######################################
+  activityNameViterbi_B.clear()#######################################
 
   if house=='A':
     
@@ -671,47 +772,33 @@ def translateNumberToActivity_simple(sequence, house):
   #--------------------CASA B----------------------------
   ################################################################
   else:
-    lastActivityDistribution = list(modelB.predict_proba(np.array([actionObservedList]).T))[-1]
-
-    with open('./Data/InferenceHomeB.csv', mode='w') as infereceB:
-      infereceBWriter = csv.writer(infereceB, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-      
-
-      infereceBWriter.writerow(['Breakfast', 'Dinner', 'Grooming', 'Leaving', 'Lunch', 'Showering', 'Sleeping', 'Snack', 'Spare_Time/TV', 'Toileting'])
-      infereceBWriter.writerow([lastActivityDistribution[0], lastActivityDistribution[1], lastActivityDistribution[2], lastActivityDistribution[3], 
-                                lastActivityDistribution[4], lastActivityDistribution[5], lastActivityDistribution[6], lastActivityDistribution[7], 
-                                lastActivityDistribution[8], lastActivityDistribution[9]])
-
-    # activity_B = list(modelB.predict(np.array([actionObservedList]).T))
-    activity_B = list(modelB.predict_proba(np.array([actionObservedList]).T))
-    for distribution in activity_B:
-      singleActivity = np.where(distribution == np.amax(distribution))
-      singleActivity = singleActivity[0]
-      # print('Ho trovato:' + str(singleActivity))
+    
+    for singleActivity in sequence:
+  
       if singleActivity == 0:
-        activityName_B.append("Breakfast -> ")
+        activityNameViterbi_B.append("Breakfast -> ")
       elif singleActivity == 1:
-        activityName_B.append("Dinner -> ")
+        activityNameViterbi_B.append("Dinner -> ")
       elif singleActivity == 2:
-        activityName_B.append("Grooming -> ")
+        activityNameViterbi_B.append("Grooming -> ")
       elif singleActivity == 3:
-        activityName_B.append("Leaving -> ")
+        activityNameViterbi_B.append("Leaving -> ")
       elif singleActivity == 4:
-        activityName_B.append("Lunch -> ")
+        activityNameViterbi_B.append("Lunch -> ")
       elif singleActivity == 5:
-        activityName_B.append("Showering -> ")
+        activityNameViterbi_B.append("Showering -> ")
       elif singleActivity == 6:
-        activityName_B.append("Sleeping -> ")
+        activityNameViterbi_B.append("Sleeping -> ")
       elif singleActivity == 7:
-        activityName_B.append("Snack -> ")
+        activityNameViterbi_B.append("Snack -> ")
       elif singleActivity == 8:
-        activityName_B.append("Spare Time/TV -> ")
+        activityNameViterbi_B.append("Spare Time/TV -> ")
       elif singleActivity == 9:
-        activityName_B.append("Toileting -> ")
+        activityNameViterbi_B.append("Toileting -> ")
       else:
         print("This is a problem...")
       
-    print("ACTIVITY NAME: ", activityName_B)
+    print("ACTIVITY NAME: ", activityNameViterbi_B)
       
     
 
