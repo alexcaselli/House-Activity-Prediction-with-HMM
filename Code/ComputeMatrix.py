@@ -170,11 +170,11 @@ def calculateO(csv_file, test):
 	# print(sor)
 	# print(O)
 
-	for row in range(0, len(O)):
-		for column in range(0, len(O[row])):
-			if O[row][column] == 0:
-				O[row][column] = 1
-				times[0][row] += 1
+	#for row in range(0, len(O)):
+	#	for column in range(0, len(O[row])):
+	#		if O[row][column] == 0:
+	#			O[row][column] = 1
+	#			times[0][row] += 1
 
 	# Normalize the matrix 
 	for i in range(0,O.shape[0]):

@@ -151,7 +151,7 @@ def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivi
         postery.append(decision[0])
         confusionMatrix[correctActivity[0][activity]][decision[0]] += 1
 
-    # plotConfusionMatrix(correctActivity[0], postery, targetActivityName, True, "Confusion Matrix")
+    #plotConfusionMatrix(correctActivity[0], postery, targetActivityName, True, "Confusion Matrix")
 
     print("CONFUSION MATRIX")
     print(confusionMatrix)

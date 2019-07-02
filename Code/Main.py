@@ -9,7 +9,7 @@ import pickle
 import math
 
 # DISABLE WARNINGS BY SKLEARN.METRICS
-warnings.filterwarnings('ignore') 
+# warnings.filterwarnings('ignore') 
 
 ################################ DONE PREPROCESSING ################################
 #launchPreProcessing()
