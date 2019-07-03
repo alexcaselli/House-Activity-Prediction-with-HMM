@@ -152,7 +152,7 @@ def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivi
         confusionMatrix[correctActivity[0][activity]][decision[0]] += 1
 
     #plotConfusionMatrix(correctActivity[0], postery, targetActivityName, True, "Confusion Matrix")
-
+    print("-----------------FILTERING-&-SMOOTHING INFERENCE-----------------")
     print("CONFUSION MATRIX")
     print(confusionMatrix)
     print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
@@ -163,6 +163,8 @@ def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivi
     print("ACCURACY SCORE:", end = " ")
     print(accuracy_score(correctActivity[0], postery))
 
+    decodeRating(model, actionObserved, correctActivity, matrixSize, targetActivityName)
+
 
 # [0: 'Breakfast', 1: 'Grooming', 2: 'Leaving', 3: 'Lunch', 4: 'Showering',
 #  5: 'Sleeping', 6: 'Snack', 7: 'Spare_Time/TV', 8: 'Toileting']
@@ -171,6 +173,36 @@ def modelRating(model, actionObserved, correctActivity, matrixSize, targetActivi
 #  3: 'CooktopPIRKitchen', 4: 'CupboardMagneticKitchen', 5: 'FridgeMagneticKitchen', 
 #  6: 'MaindoorMagneticEntrance', 7: 'MicrowaveElectricKitchen', 8: 'SeatPressureLiving', 
 #  9: 'ShowerPIRBathroom', 10: 'ToasterElectricKitchen', 11: 'ToiletFlushBathroom'] plt.cm.Blues
+
+def decodeRating(model, actionObserved, correctActivity, matrixSize, targetActivityName):
+
+    posteriors = model.decode(actionObserved.T, algorithm = 'viterbi')[1]
+    print("-----------------DECODE INFERENCE-----------------")
+    cont = 0
+
+    confusionMatrix = np.zeros((matrixSize, matrixSize))
+
+    for activity in range(0, len(correctActivity[0])):
+        if posteriors[activity] != correctActivity[0][activity]:
+            # print(activity)
+            # print(posteriors[activity])
+            # print(correctActivity[0][activity])
+            cont += 1
+            # print("")
+        confusionMatrix[correctActivity[0][activity]][posteriors[activity]] += 1
+
+    # plotConfusionMatrix(correctActivity[0], posteriors, targetActivityName, False, "Confusion Matrix")
+    print("CONFUSION MATRIX")
+    print(confusionMatrix)
+    print("WRONG INFERENCE: " + str(cont) + ' ON: ' + str(len(correctActivity[0])) + ' ACTIVITIES')
+
+
+    print(classification_report(correctActivity[0], posteriors, target_names=targetActivityName))
+    print("")
+    print("ACCURACY SCORE:", end = " ")
+    print(accuracy_score(correctActivity[0], posteriors))
+
+
 
 def plotConfusionMatrix(y_true, y_pred, classes, normalize, title, cmap= plotly.cm.get_cmap("Blues")):
     """
