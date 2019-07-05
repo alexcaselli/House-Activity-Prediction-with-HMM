@@ -107,29 +107,29 @@ app.layout = html.Div([
       ], style={"height" : "600px", 'position':'relative', 'top':50 , 'left':'55vh', "background-image": 'url("https://i.ibb.co/g4ZqxYk/Modelli540-A.png")', 'background-repeat': 'no-repeat'}),
      html.Div(id='result', style={
         'textAlign': 'center'}),
-      
-    html.Hr(),
-    html.Div([], style={'height':30}),
-    html.H2('Viterbi Algorithm', style={'text-align':'center'}),
-    html.Div([
-    html.Button('Basin', id='BPB_V', n_clicks_timestamp=0),
-    html.Button('Bed', id='BePBe_V', n_clicks_timestamp=0),
-    html.Button('Cabinet', id='CMB_V', n_clicks_timestamp=0),
-    html.Button('Cooktop', id='CPK_V', n_clicks_timestamp=0),
-    html.Button('Cupboard', id='CMK_V', n_clicks_timestamp=0),
-    html.Button('Fridge', id='FMK_V', n_clicks_timestamp=0),
-    html.Button('Maindoor', id='MME_V', n_clicks_timestamp=0),
-    html.Button('Microwave', id='MEK_V', n_clicks_timestamp=0),
-    html.Button('Sofa', id='SPL_V', n_clicks_timestamp=0),
-    html.Button('Shower', id='SPB_V', n_clicks_timestamp=0),
-    html.Button('Toaster', id='TEK_V', n_clicks_timestamp=0),
-    html.Button('Toilet', id='TFB_V', n_clicks_timestamp=0),
     
-    #'position':'relative', 'left':275
-    ], style={'text-align':'center',
-        }),
-    html.Div([html.Button('Start', id='viterbi', n_clicks_timestamp=0)], style={'text-align':'center'}),
-    html.Div(id='container-button-timestamp'),
+    # html.Hr(),
+    # html.Div([], style={'height':30}),
+    # html.H2('Viterbi Algorithm', style={'text-align':'center'}),
+    # html.Div([
+    # html.Button('Basin', id='BPB_V', n_clicks_timestamp=0),
+    # html.Button('Bed', id='BePBe_V', n_clicks_timestamp=0),
+    # html.Button('Cabinet', id='CMB_V', n_clicks_timestamp=0),
+    # html.Button('Cooktop', id='CPK_V', n_clicks_timestamp=0),
+    # html.Button('Cupboard', id='CMK_V', n_clicks_timestamp=0),
+    # html.Button('Fridge', id='FMK_V', n_clicks_timestamp=0),
+    # html.Button('Maindoor', id='MME_V', n_clicks_timestamp=0),
+    # html.Button('Microwave', id='MEK_V', n_clicks_timestamp=0),
+    # html.Button('Sofa', id='SPL_V', n_clicks_timestamp=0),
+    # html.Button('Shower', id='SPB_V', n_clicks_timestamp=0),
+    # html.Button('Toaster', id='TEK_V', n_clicks_timestamp=0),
+    # html.Button('Toilet', id='TFB_V', n_clicks_timestamp=0),
+    
+    # 'position':'relative', 'left':275
+    # ], style={'text-align':'center',
+    #    }),
+    # html.Div([html.Button('Start', id='viterbi', n_clicks_timestamp=0)], style={'text-align':'center'}),
+    # html.Div(id='container-button-timestamp'),
 
     
       
@@ -216,28 +216,30 @@ app.layout = html.Div([
      html.Div(id='result_B', style={
         'textAlign': 'center'}),
 
-        html.Hr(),
-    html.Div([], style={'height':30}),
-    html.H2('Viterbi Algorithm', style={'text-align':'center'}),
-    html.Div([
-    html.Button('Basin', id='BPB_VB', n_clicks_timestamp=0),
-    html.Button('Bed', id='BePBe_VB', n_clicks_timestamp=0),
-    html.Button('Cupboard', id='CMK_VB', n_clicks_timestamp=0),
-    html.Button('BedroomDoor', id='DPB_VB', n_clicks_timestamp=0),
-    html.Button('KitchenDoor', id='DPK_VB', n_clicks_timestamp=0),
-    html.Button('LivingDoor', id='DPL_VB', n_clicks_timestamp=0),
-    html.Button('Fridge', id='FMK_VB', n_clicks_timestamp=0),
-    html.Button('Maindoor', id='MME_VB', n_clicks_timestamp=0),
-    html.Button('Microwave', id='MEK_VB', n_clicks_timestamp=0),
-    html.Button('Sofa', id='SPL_VB', n_clicks_timestamp=0),
-    html.Button('Shower', id='SPB_VB', n_clicks_timestamp=0),
-    html.Button('Toilet', id='TFB_VB', n_clicks_timestamp=0),
+    # html.Hr(),
+    # html.Div([], style={'height':30}),
+    # html.H2('Viterbi Algorithm', style={'text-align':'center'}),
+    # html.Div([
+    # html.Button('Basin', id='BPB_VB', n_clicks_timestamp=0),
+    # html.Button('Bed', id='BePBe_VB', n_clicks_timestamp=0),
+    # html.Button('Cupboard', id='CMK_VB', n_clicks_timestamp=0),
+    # html.Button('BedroomDoor', id='DPB_VB', n_clicks_timestamp=0),
+    # html.Button('KitchenDoor', id='DPK_VB', n_clicks_timestamp=0),
+    # html.Button('LivingDoor', id='DPL_VB', n_clicks_timestamp=0),
+    # html.Button('Fridge', id='FMK_VB', n_clicks_timestamp=0),
+    # html.Button('Maindoor', id='MME_VB', n_clicks_timestamp=0),
+    # html.Button('Microwave', id='MEK_VB', n_clicks_timestamp=0),
+    # html.Button('Sofa', id='SPL_VB', n_clicks_timestamp=0),
+    # html.Button('Shower', id='SPB_VB', n_clicks_timestamp=0),
+    # html.Button('Toilet', id='TFB_VB', n_clicks_timestamp=0),
     
     #'position':'relative', 'left':275
-    ], style={'text-align':'center',
-        }),
-    html.Div([html.Button('Start', id='viterbi_B', n_clicks_timestamp=0)], style={'text-align':'center'}),
-    html.Div(id='viterbi_result'),
+    # ], style={'text-align':'center',
+    #     }),
+    # html.Div([html.Button('Start', id='viterbi_B', n_clicks_timestamp=0)], style={'text-align':'center'}),
+    # html.Div(id='viterbi_result'),
+
+
     ]),
 
   ]),
@@ -584,7 +586,7 @@ def displayClick2(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
                 ),
 
       ]) 
-
+'''
 @app.callback(Output('container-button-timestamp', 'children'),
               [Input('BPB_V', 'n_clicks_timestamp'),
                Input('BePBe_V', 'n_clicks_timestamp'),
@@ -731,7 +733,7 @@ def displayclick4(act0, act1, act2, act3, act4, act5, act6, act7, act8, act9, ac
       if action == -1:
         print("This is a problem...")
       elif action != 12:
-        actionObservedListViterbi_B.append(action)
+        actionObservedListViterbi_B.append(action)'''
 
 
 def translateNumberToActivity_simple(sequence, house):
